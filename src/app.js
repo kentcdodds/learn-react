@@ -2,7 +2,7 @@ import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
 
-const files = ['01', '02', '03']
+const files = ['01', '02', '03', '04']
 
 const pages = files.reduce((p, filename, index, fullArray) => {
   // const previousFilename = fullArray[index - 1]
@@ -190,6 +190,15 @@ function Home() {
   return (
     <div>
       <h1 style={{textAlign: 'center'}}>Learn React</h1>
+      <p>
+        This is the app that shows a rendered version of all the exercises and
+        final versions for the Learn React workshop. There are a few more
+        introductory exercises that are not shown here in the interest of
+        starting more simply for those. Please learn more by going to
+        <a href="https://github.com/kentcdodds/learn-react">
+          the Learn React repo
+        </a>
+      </p>
       <div>
         {filesAndTitles.map(({title, filename}) => {
           return (

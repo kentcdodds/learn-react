@@ -21,14 +21,17 @@ import React from 'react'
 function App() {
   return (
     <div>
-      {/* apply the appropriate click handler here */}
+      {/* 🐨 apply the appropriate click handler here */}
       <button>Click me!</button>
-      {/* apply the appropriate change handler here */}
+      {/* 🐨 apply the appropriate change handler here */}
       <input />
     </div>
   )
 }
 
+// Don't make changes to the Usage component. It's here to show you how your
+// component is intended to be used and is used in the tests.
+// You can make all the tests pass by updating the code above.
 function Usage({
   onButtonClick = () => console.log('you clicked the button!'),
   onInputChange = event =>

@@ -1,4 +1,5 @@
 import {render as renderUI, Simulate, wait} from 'react-testing-library'
+import 'jest-dom/extend-expect'
 import React from 'react'
 
 // this only exists so we can search for an instance of the Switch
