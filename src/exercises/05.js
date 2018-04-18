@@ -25,7 +25,7 @@ class StopWatch extends React.Component {
   // is running (so you can change the "Start/Stop" text)
   state = {lapse: 0, running: false}
 
-  // 🐨 You'll need a click handler for the Start/Stop button
+  // 🐨 You'll need a bound click handler for the Start/Stop button
   // you can call it `handleRunClick`. If the stopwatch
   // is not in a running state, then you'll want to start things
   // off running and store a startTime variable
@@ -44,8 +44,13 @@ class StopWatch extends React.Component {
   // 🐨 finally, you'll want to use this.setState with an updater function
   // to toggle the running state.
 
-  // 🐨 You'll need a `handleClearClick` function here that's responsible
+  // 🐨 You'll need a bound `handleClearClick` function here that's responsible
   // for clearing `this.intervalId` and setting state back to the initial state
+
+  // if the component is "unmounted" (removed from the page), then we want to make sure
+  // we clear any active interval so we don't continue to call setState on a component
+  // that is no longer on the page.
+  // 🐨 Add a `componentWillUnmount` method here that simply clears `this.intervalId`
   render() {
     // 🐨 here you'll need to render the stopwatch. It should have the following structure:
     // <div>

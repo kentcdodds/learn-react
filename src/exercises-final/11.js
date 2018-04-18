@@ -1,9 +1,9 @@
-// Rendering Arrays
+// Making HTTP requests
 import React from 'react'
 
 function Usage() {
   return <div>todo</div>
 }
-Usage.title = 'Rendering Arrays'
+Usage.title = 'Making HTTP requests'
 
 export default Usage

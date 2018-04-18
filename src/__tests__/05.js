@@ -7,6 +7,7 @@ import Usage from '../exercises-final/05'
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
 test('renders', async () => {
+  jest.spyOn(console, 'error')
   const {container, unmount, getByText} = render(<Usage />)
   Simulate.click(getByText('Start'))
   const label = container.querySelector('label')
@@ -30,7 +31,23 @@ test('renders', async () => {
   await sleep(20)
   Simulate.click(getByText('Clear'))
   expect(parseInt(label.textContent, 10)).toBe(0)
+
+  Simulate.click(getByText('Start'))
   unmount()
+  await sleep(20)
+  try {
+    expect(console.error).toHaveBeenCalledTimes(0)
+  } catch (error) {
+    if (console.error.mock.calls[0][0].includes('unmounted component')) {
+      error.message = [
+        chalk.red(
+          `🚨  It appears that when the component is mounted it doesn't clear the interval, so it keeps trying to call setState on an unmounted component. This could lead to a memory leak. Make sure to use componentWillUnmount to clear the interval 🚨`,
+        ),
+        error.message,
+      ].join('\n')
+    }
+    throw error
+  }
 })
 
 //////// Elaboration & Feedback /////////

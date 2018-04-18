@@ -1,4 +1,4 @@
-// Controlled Form Fields
+// Rendering Arrays
 import React from 'react'
 
 // Don't make changes to the Usage component. It's here to show you how your
@@ -7,6 +7,6 @@ import React from 'react'
 function Usage() {
   return <div>todo</div>
 }
-Usage.title = 'Controlled Form Fields'
+Usage.title = 'Rendering Arrays'
 
 export default Usage

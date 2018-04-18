@@ -34,6 +34,9 @@ class StopWatch extends React.Component {
     clearInterval(this.intervalId)
     this.setState(this.initialState)
   }
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
+  }
   render() {
     const {lapse, running} = this.state
     return (

@@ -1,9 +1,9 @@
-// Interact with the DOM
+// Basic Forms
 import React from 'react'
 
 function Usage() {
   return <div>todo</div>
 }
-Usage.title = 'Interact with the DOM'
+Usage.title = 'Basic Forms'
 
 export default Usage

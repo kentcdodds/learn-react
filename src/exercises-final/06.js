@@ -1,9 +1,9 @@
-// Preventing Memory Leaks
+// Interact with the DOM
 import React from 'react'
 
 function Usage() {
   return <div>todo</div>
 }
-Usage.title = 'Preventing Memory Leaks'
+Usage.title = 'Interact with the DOM'
 
 export default Usage

@@ -1,4 +1,4 @@
-// Dynamic Forms
+// Controlled Form Fields
 import React from 'react'
 
 // Don't make changes to the Usage component. It's here to show you how your
@@ -7,6 +7,6 @@ import React from 'react'
 function Usage() {
   return <div>todo</div>
 }
-Usage.title = 'Dynamic Forms'
+Usage.title = 'Controlled Form Fields'
 
 export default Usage

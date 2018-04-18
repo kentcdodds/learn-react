@@ -2,20 +2,7 @@ import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
 
-const files = [
-  '01',
-  '02',
-  '03',
-  '04',
-  '05',
-  '06',
-  '07',
-  '08',
-  '09',
-  '10',
-  '11',
-  '12',
-]
+const files = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']
 
 const pages = files.reduce((p, filename, index, fullArray) => {
   // const previousFilename = fullArray[index - 1]
