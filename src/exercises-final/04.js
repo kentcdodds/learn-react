@@ -1,4 +1,4 @@
-// Class Components and state
+// Class Components and simple state
 import React from 'react'
 
 class Counter extends React.Component {
@@ -16,6 +16,6 @@ class Counter extends React.Component {
 function Usage() {
   return <Counter />
 }
-Usage.title = 'Class Components and state'
+Usage.title = 'Class Components and simple state'
 
 export default Usage
