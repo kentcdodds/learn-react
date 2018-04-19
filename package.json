@@ -7,6 +7,7 @@
   "homepage": "https://learn-reactjs.netlify.com/",
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "jest-dom": "^1.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.0",
