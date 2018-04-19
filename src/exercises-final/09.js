@@ -14,11 +14,7 @@ class MyFancyForm extends React.Component {
       .split(',')
       .map(v => v.trim())
       .filter(Boolean)
-    this.setState({
-      commaSeparated: value,
-      multiline: allVals.join('\n'),
-      multiSelect: allVals.filter(v => availableOptions.includes(v)),
-    })
+    this.setStateForAllFields(allVals, {commaSeparated: value})
   }
   handleMultilineChange = event => {
     const {value} = event.target
@@ -26,18 +22,18 @@ class MyFancyForm extends React.Component {
       .split('\n')
       .map(v => v.trim())
       .filter(Boolean)
-    this.setState({
-      multiline: value,
-      commaSeparated: allVals.join(','),
-      multiSelect: allVals.filter(v => availableOptions.includes(v)),
-    })
+    this.setStateForAllFields(allVals, {multiline: value})
   }
   handleMultiSelectChange = event => {
     const allVals = Array.from(event.target.selectedOptions).map(o => o.value)
+    this.setStateForAllFields(allVals)
+  }
+  setStateForAllFields(arrayOfItems, overrides) {
     this.setState({
-      multiSelect: allVals,
-      multiline: allVals.join('\n'),
-      commaSeparated: allVals.join(','),
+      commaSeparated: arrayOfItems.join(','),
+      multiline: arrayOfItems.join('\n'),
+      multiSelect: arrayOfItems.filter(v => availableOptions.includes(v)),
+      ...overrides,
     })
   }
   render() {
