@@ -1,10 +1,43 @@
 import React from 'react'
-import {render} from '../../test/utils'
+import {renderIntoDocument, cleanup, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/08'
 // import Usage from '../exercises/08'
 
-test('renders', () => {
-  render(<Usage />)
+afterEach(cleanup)
+
+test('calls the onSubmitUsername handler when the submit is fired', () => {
+  const originalError = console.error
+  console.error = (...args) => {
+    // get rid of the distracting jsdom error
+    if (args[0] && args[0].includes('Not implemented')) {
+      return
+    }
+    originalError(...args)
+  }
+  const handleSubmitUsername = jest.fn()
+  const {getByLabelText, getByText} = renderIntoDocument(
+    <Usage onSubmitUsername={handleSubmitUsername} />,
+  )
+  const input = getByLabelText('username')
+  const submit = getByText('submit')
+
+  input.value = 'a'
+  fireEvent.change(input)
+  expect(submit).toHaveAttribute('disabled', '') // too short
+  expect(getByText('at least 3 characters')).toBeInTheDOM()
+
+  input.value = 'abcd'
+  fireEvent.change(input)
+  expect(submit).toHaveAttribute('disabled', '') // missing s
+  expect(getByText(/Value.*"s".*should/)).toBeInTheDOM()
+
+  input.value = 'Samwise'
+  fireEvent.change(input)
+  fireEvent.click(submit)
+
+  expect(handleSubmitUsername).toHaveBeenCalledTimes(1)
+  expect(handleSubmitUsername).toHaveBeenCalledWith(input.value)
+  console.error = originalError
 })
 
 //////// Elaboration & Feedback /////////
@@ -14,7 +47,7 @@ test('renders', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react&e=08&em=
+http://ws.kcd.im/?ws=learn%20react&e=07&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
