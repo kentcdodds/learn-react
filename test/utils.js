@@ -1,4 +1,11 @@
-import {render as renderUI, Simulate, wait} from 'react-testing-library'
+import {
+  render as renderUI,
+  renderIntoDocument,
+  Simulate,
+  wait,
+  fireEvent,
+  cleanup,
+} from 'react-testing-library'
 import 'jest-dom/extend-expect'
 import React from 'react'
 
@@ -20,4 +27,4 @@ function render(ui) {
   }
 }
 
-export {render, Simulate, wait}
+export {render, renderIntoDocument, Simulate, wait, fireEvent, cleanup}

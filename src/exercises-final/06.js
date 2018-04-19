@@ -3,9 +3,9 @@ import React from 'react'
 import VanillaTilt from 'vanilla-tilt'
 
 class Tilt extends React.Component {
-  rootNode = React.createRef()
+  rootRef = React.createRef()
   componentDidMount() {
-    VanillaTilt.init(this.rootNode.current, {
+    VanillaTilt.init(this.rootRef.current, {
       max: 25,
       speed: 400,
       glare: true,
@@ -14,7 +14,7 @@ class Tilt extends React.Component {
   }
   render() {
     return (
-      <div ref={this.rootNode} className="tilt-root">
+      <div ref={this.rootRef} className="tilt-root">
         <div className="tilt-child">{this.props.children}</div>
       </div>
     )
