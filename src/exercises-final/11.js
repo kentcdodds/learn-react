@@ -52,10 +52,11 @@ class UserCompany extends React.Component {
 
 class Usage extends React.Component {
   state = {username: undefined}
+  inputRef = React.createRef()
   handleSubmit = e => {
     e.preventDefault()
     this.setState({
-      username: this.inputNode.value,
+      username: this.inputRef.current.value,
     })
   }
   render() {
@@ -63,9 +64,13 @@ class Usage extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input ref={node => (this.inputNode = node)} />
+          <label htmlFor="username-input">GitHub Username</label>
+          <input id="username-input" ref={this.inputRef} />
+          <button type="submit">Submit</button>
         </form>
-        {username ? <UserCompany username={username} /> : null}
+        <div data-testid="username-display">
+          {username ? <UserCompany username={username} /> : null}
+        </div>
       </div>
     )
   }
