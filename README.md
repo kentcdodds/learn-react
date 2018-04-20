@@ -83,6 +83,15 @@ npm test
 This will start [Jest](http://facebook.github.io/jest) in watch mode. Read the
 output and play around with it.
 
+## Working through it
+
+You'll want to start in the `intro/exercises` directory where we start with
+raw React and DOM APIs. Pull open the `.html` files in your browser and follow
+along in the comments.
+
+Once you get through those, then start in the `src/exercises` directory and
+work through those.
+
 **Your goal will be to go into each test, swap the final version for the
 exercise version in the import, and make the tests pass**
 
@@ -126,9 +135,11 @@ help if I can.
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
 | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Tests") |
 | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
