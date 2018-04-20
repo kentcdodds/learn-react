@@ -21,10 +21,7 @@ function SayHello(props) {
 //
 // 💰 to find out what's available, try this:
 // console.log(PropTypes)
-SayHello.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-}
+
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
