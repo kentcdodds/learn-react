@@ -1,19 +1,19 @@
 import React from 'react'
-import {render, Simulate} from '../../test/utils'
+import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/03'
 // import Usage from '../exercises/03'
 
 test('calls the onButtonClick when the button is clicked', () => {
   const onButtonClick = jest.fn()
   const {container} = render(<Usage onButtonClick={onButtonClick} />)
-  Simulate.click(container.querySelector('button'))
+  fireEvent.click(container.querySelector('button'))
   expect(onButtonClick).toHaveBeenCalledTimes(1)
 })
 
 test('calls the onInputChange when the input is changed', () => {
   const onInputChange = jest.fn()
   const {container} = render(<Usage onInputChange={onInputChange} />)
-  Simulate.change(container.querySelector('input'))
+  fireEvent.change(container.querySelector('input'))
   expect(onInputChange).toHaveBeenCalledTimes(1)
 })
 

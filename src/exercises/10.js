@@ -1,11 +1,49 @@
 // Rendering Arrays
 import React from 'react'
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
-// You can make all the tests pass by updating the code above.
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+class App extends React.Component {
+  state = {items: []}
+  addItem = () => {
+    this.setState(({items}) => ({
+      items: [...items, allItems.find(i => !items.includes(i))],
+    }))
+  }
+  removeItem = item => {
+    this.setState(({items}) => ({
+      items: items.filter(i => i !== item),
+    }))
+  }
+  render() {
+    const {items} = this.state
+    return (
+      <div>
+        <button
+          disabled={items.length >= allItems.length}
+          onClick={this.addItem}
+        >
+          +
+        </button>
+        {items.map(i => (
+          // 🐨 this div needs a key. Set it to i.id
+          <div>
+            <button onClick={() => this.removeItem(i)}>-</button>
+            {i.value}:
+            <input />
+          </div>
+        ))}
+      </div>
+    )
+  }
+}
+
 function Usage() {
-  return <div>todo</div>
+  return <App />
 }
 Usage.title = 'Rendering Arrays'
 

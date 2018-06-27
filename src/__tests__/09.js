@@ -1,12 +1,10 @@
 import React from 'react'
-import {renderIntoDocument, cleanup, fireEvent} from '../../test/utils'
+import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/09'
 // import Usage from '../exercises/09'
 
-afterEach(cleanup)
-
 test('keeps things in sync', () => {
-  const {container} = renderIntoDocument(<Usage />)
+  const {container} = render(<Usage />)
   const input = container.querySelector('input')
   const textarea = container.querySelector('textarea')
   const select = container.querySelector('select')

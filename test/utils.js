@@ -1,12 +1,11 @@
+import 'jest-dom/extend-expect'
+import 'react-testing-library/cleanup-after-each'
 import {
   render as renderUI,
-  renderIntoDocument,
-  Simulate,
   wait,
   fireEvent,
   cleanup,
 } from 'react-testing-library'
-import 'jest-dom/extend-expect'
 import React from 'react'
 
 // this only exists so we can search for an instance of the Switch
@@ -27,4 +26,4 @@ function render(ui) {
   }
 }
 
-export {render, renderIntoDocument, Simulate, wait, fireEvent, cleanup}
+export {render, wait, fireEvent, cleanup}

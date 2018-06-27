@@ -1,12 +1,12 @@
 import React from 'react'
-import {render, Simulate} from '../../test/utils'
+import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/04'
 // import Usage from '../exercises/04'
 
 test('clicking the button increments the count', () => {
   const {container} = render(<Usage />)
   const button = container.querySelector('button')
-  Simulate.click(button)
+  fireEvent.click(button)
   expect(button).toHaveTextContent('1')
 })
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import chalk from 'chalk'
-import {render, Simulate} from '../../test/utils'
+import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/05'
 // import Usage from '../exercises/05'
 
@@ -9,10 +9,10 @@ const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 test('renders', async () => {
   jest.spyOn(console, 'error')
   const {container, unmount, getByText} = render(<Usage />)
-  Simulate.click(getByText('Start'))
+  fireEvent.click(getByText('Start'))
   const label = container.querySelector('label')
   await sleep(20)
-  Simulate.click(getByText('Stop'))
+  fireEvent.click(getByText('Stop'))
   try {
     expect(parseInt(label.textContent, 10)).toBeGreaterThan(10)
   } catch (error) {
@@ -24,15 +24,15 @@ test('renders', async () => {
     ].join('\n')
     throw error
   }
-  Simulate.click(getByText('Clear'))
+  fireEvent.click(getByText('Clear'))
   expect(parseInt(label.textContent, 10)).toBe(0)
 
-  Simulate.click(getByText('Start'))
+  fireEvent.click(getByText('Start'))
   await sleep(20)
-  Simulate.click(getByText('Clear'))
+  fireEvent.click(getByText('Clear'))
   expect(parseInt(label.textContent, 10)).toBe(0)
 
-  Simulate.click(getByText('Start'))
+  fireEvent.click(getByText('Start'))
   unmount()
   await sleep(20)
   try {

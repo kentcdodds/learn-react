@@ -1,7 +1,7 @@
 import React from 'react'
 import chalk from 'chalk'
 import axiosMock from 'axios'
-import {renderIntoDocument, render, cleanup, wait} from '../../test/utils'
+import {render, wait} from '../../test/utils'
 import Usage from '../exercises-final/11'
 // import Usage from '../exercises/11'
 
@@ -13,12 +13,10 @@ jest.mock('axios', () => {
   )
 })
 
-afterEach(cleanup)
-
 test('displays the user company', async () => {
-  const {getByLabelText, getByText, getByTestId} = renderIntoDocument(<Usage />)
-  getByLabelText('username').value = 'jeffry'
-  getByText('submit').click()
+  const {getByLabelText, getByText, getByTestId} = render(<Usage />)
+  getByLabelText(/username/i).value = 'jeffry'
+  getByText(/submit/i).click()
   await wait(() =>
     expect(getByTestId('username-display')).toHaveTextContent('Jimmy Johns'),
   )
@@ -42,8 +40,8 @@ test('displays the user company', async () => {
       data: {data: {user: {company: 'McDonalds'}}},
     }),
   )
-  getByLabelText('username').value = 'fred'
-  getByText('submit').click()
+  getByLabelText(/username/i).value = 'fred'
+  getByText(/submit/i).click()
   await wait(() =>
     expect(getByTestId('username-display')).toHaveTextContent('McDonalds'),
   )
@@ -52,7 +50,7 @@ test('displays the user company', async () => {
   expect(axiosMock.mock.calls[0][0].data.query).toMatch('fred')
   axiosMock.mockClear()
 
-  getByText('submit').click()
+  getByText(/submit/i).click()
   try {
     expect(axiosMock).not.toHaveBeenCalled()
   } catch (error) {

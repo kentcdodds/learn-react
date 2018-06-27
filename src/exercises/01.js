@@ -1,5 +1,6 @@
 // validate components with propTypes
 import React from 'react'
+// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types'
 
 // you'll notice that the Usage below is attempting to create
@@ -21,7 +22,6 @@ function SayHello(props) {
 //
 // 💰 to find out what's available, try this:
 // console.log(PropTypes)
-
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.

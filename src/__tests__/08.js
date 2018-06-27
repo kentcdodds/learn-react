@@ -1,9 +1,7 @@
 import React from 'react'
-import {renderIntoDocument, cleanup, fireEvent} from '../../test/utils'
+import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/08'
 // import Usage from '../exercises/08'
-
-afterEach(cleanup)
 
 test('calls the onSubmitUsername handler when the submit is fired', () => {
   const originalError = console.error
@@ -15,16 +13,16 @@ test('calls the onSubmitUsername handler when the submit is fired', () => {
     originalError(...args)
   }
   const handleSubmitUsername = jest.fn()
-  const {getByLabelText, getByText} = renderIntoDocument(
+  const {getByLabelText, getByText} = render(
     <Usage onSubmitUsername={handleSubmitUsername} />,
   )
-  const input = getByLabelText('username')
-  const submit = getByText('submit')
+  const input = getByLabelText(/username/i)
+  const submit = getByText(/submit/i)
 
   input.value = 'a'
   fireEvent.change(input)
   expect(submit).toHaveAttribute('disabled', '') // too short
-  expect(getByText('at least 3 characters')).toBeInTheDOM()
+  expect(getByText(/at least 3 characters/i)).toBeInTheDOM()
 
   input.value = 'abcd'
   fireEvent.change(input)
