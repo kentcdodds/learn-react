@@ -3,35 +3,38 @@ import React from 'react'
 import axios from 'axios'
 
 class UserCompany extends React.Component {
+  static defaultProps = {axios}
   state = {company: undefined, loaded: false}
   fetchCompany = () => {
-    axios({
-      url: 'https://api.github.com/graphql',
-      method: 'post',
-      data: {
-        query: `{
+    this.props
+      .axios({
+        url: 'https://api.github.com/graphql',
+        method: 'post',
+        data: {
+          query: `{
           user(login: "${this.props.username}") {
             company
           }
         }`,
-      },
-      headers: {
-        Authorization: `bearer I DELETED THE TOKEN. YOU'LL HAVE TO MAKE YOUR OWN`,
-      },
-    }).then(
-      response => {
-        this.setState({
-          loaded: true,
-          company: response.data.data.user.company,
-        })
-      },
-      error => {
-        this.setState({
-          error,
-          loaded: true,
-        })
-      },
-    )
+        },
+        headers: {
+          Authorization: `bearer I DELETED THE TOKEN. YOU'LL HAVE TO MAKE YOUR OWN`,
+        },
+      })
+      .then(
+        response => {
+          this.setState({
+            loaded: true,
+            company: response.data.data.user.company,
+          })
+        },
+        error => {
+          this.setState({
+            error,
+            loaded: true,
+          })
+        },
+      )
   }
   componentDidMount() {
     this.fetchCompany()
@@ -69,7 +72,9 @@ class Usage extends React.Component {
           <button type="submit">Submit</button>
         </form>
         <div data-testid="username-display">
-          {username ? <UserCompany username={username} /> : null}
+          {username ? (
+            <UserCompany username={username} axios={this.props.axios} />
+          ) : null}
         </div>
       </div>
     )

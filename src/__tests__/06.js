@@ -1,22 +1,11 @@
 import React from 'react'
-import VanillaTiltMock from 'vanilla-tilt'
 import {render} from '../../test/utils'
 import Usage from '../exercises-final/06'
 // import Usage from '../exercises/06'
 
-jest.mock('vanilla-tilt', () => {
-  return {
-    init: jest.fn(),
-  }
-})
-
 test('calls VanillaTilt.init with the root node', () => {
   const {container} = render(<Usage />)
-  expect(VanillaTiltMock.init).toHaveBeenCalledTimes(1)
-  expect(VanillaTiltMock.init).toHaveBeenCalledWith(
-    container.querySelector('.tilt-root'),
-    expect.any(Object),
-  )
+  expect(container.querySelector('.tilt-root')).toHaveProperty('vanillaTilt')
 })
 
 //////// Elaboration & Feedback /////////

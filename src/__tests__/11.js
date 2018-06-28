@@ -5,16 +5,15 @@ import {render, wait} from '../../test/utils'
 import Usage from '../exercises-final/11'
 // import Usage from '../exercises/11'
 
-jest.mock('axios', () => {
-  return jest.fn(() =>
+test('displays the user company', async () => {
+  const axiosMock = jest.fn(() =>
     Promise.resolve({
       data: {data: {user: {company: 'Jimmy Johns'}}},
     }),
   )
-})
-
-test('displays the user company', async () => {
-  const {getByLabelText, getByText, getByTestId} = render(<Usage />)
+  const {getByLabelText, getByText, getByTestId} = render(
+    <Usage axios={axiosMock} />,
+  )
   getByLabelText(/username/i).value = 'jeffry'
   getByText(/submit/i).click()
   await wait(() =>
