@@ -7,7 +7,7 @@ import Usage from '../exercises-final/02'
 const {DOMElement, DOMCollection} = prettyFormat.plugins
 
 test('renders the correct styles', () => {
-  // we're soing this renderToStaticMarkup business because
+  // we're doing this renderToStaticMarkup business because
   // for some reason rendering it like normally doesn't give
   // us the style props correctly.
   const html = ReactDOMServer.renderToStaticMarkup(<Usage />)

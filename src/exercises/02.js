@@ -1,4 +1,4 @@
-// validate components with propTypes
+// Styling
 import React from 'react'
 
 // There are two primary ways to style react components
@@ -49,6 +49,6 @@ function Usage() {
     </div>
   )
 }
-Usage.title = 'PropTypes'
+Usage.title = 'Styling'
 
 export default Usage

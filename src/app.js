@@ -194,7 +194,7 @@ function Home() {
         This is the app that shows a rendered version of all the exercises and
         final versions for the Learn React workshop. There are a few more
         introductory exercises that are not shown here in the interest of
-        starting more simply for those. Please learn more by going to
+        starting more simply for those. Please learn more by going to{' '}
         <a href="https://github.com/kentcdodds/learn-react">
           the Learn React repo
         </a>
