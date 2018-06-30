@@ -19,6 +19,16 @@
         "infra",
         "test"
       ]
+    },
+    {
+      "login": "nathanhannig",
+      "name": "Nathan Hannig",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8210763?v=4",
+      "profile": "https://nathanhannig.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
