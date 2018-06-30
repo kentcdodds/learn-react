@@ -19,7 +19,7 @@ import React from 'react'
 //   an element with the `class` attribute. In JSX, you use the
 //   `className` prop.
 //
-// In this excercise we'll use both methods for styling react components.
+// In this exercise we'll use both methods for styling react components.
 //
 // We have a few class names on this page:
 // .box
