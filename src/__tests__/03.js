@@ -13,7 +13,7 @@ test('calls the onButtonClick when the button is clicked', () => {
 test('calls the onInputChange when the input is changed', () => {
   const onInputChange = jest.fn()
   const {container} = render(<Usage onInputChange={onInputChange} />)
-  fireEvent.change(container.querySelector('input'))
+  fireEvent.change(container.querySelector('input'), {target: {value: 'a'}})
   expect(onInputChange).toHaveBeenCalledTimes(1)
 })
 

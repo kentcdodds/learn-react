@@ -10,8 +10,7 @@ test('keeps things in sync', () => {
   const select = container.querySelector('select')
 
   let currentValue = ['apple', 'grape', 'orange']
-  input.value = currentValue.join(',')
-  fireEvent.change(input)
+  fireEvent.change(input, {target: {value: currentValue.join(',')}})
   valuesAreCorrect()
 
   // TODO...
