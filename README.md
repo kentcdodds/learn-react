@@ -38,7 +38,9 @@ variable and how to fix it here for [windows][win-path] or
 
 You may be able to work through the entire workshop in the browser. Go to
 [this codesandbox](https://codesandbox.io/s/github/kentcdodds/learn-react)
-and you should be good to go.
+and you should be good to go. (Note: there are a few exercises in the `intro`
+folder which you won't be able to run in codesandbox, but don't require
+installing any dependencies).
 
 If you'd rather be able to work through the workshop on your own computer, then
 follow the following instructions.
