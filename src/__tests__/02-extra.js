@@ -1,11 +1,23 @@
 import React from 'react'
-import {render} from 'react-testing-library'
+import ReactDOMServer from 'react-dom/server.browser'
+import prettyFormat from 'pretty-format'
 import Usage from '../exercises-final/02-extra'
 // import Usage from '../exercises/02-extra'
 
+const {DOMElement, DOMCollection} = prettyFormat.plugins
+
 test('renders the correct styles', () => {
-  const {container} = render(<Usage />)
-  expect(container).toMatchSnapshot()
+  // we're doing this renderToStaticMarkup business because
+  // for some reason rendering it like normally doesn't give
+  // us the style props correctly.
+  const html = ReactDOMServer.renderToStaticMarkup(<Usage />)
+  const div = document.createElement('div')
+  div.innerHTML = html
+
+  const formattedHTML = prettyFormat(div.firstChild, {
+    plugins: [DOMElement, DOMCollection],
+  })
+  expect(formattedHTML).toMatchSnapshot()
 })
 
 //////// Elaboration & Feedback /////////
@@ -15,7 +27,7 @@ test('renders the correct styles', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react&e=02&em=
+http://ws.kcd.im/?ws=learn%20react&e=02-extra&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
