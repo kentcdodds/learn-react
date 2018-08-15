@@ -6,6 +6,7 @@ experience in software development.
 
 To help supplement your learning, here are a few resources you may find helpful:
 
+- [Kent C. Dodds News](http://kcd.im/news) - Newsletter that feeds into my blog
 - [Kent C. Dodds Blog](https://blog.kentcdodds.com) - Lots of posts on React
 - [Dev Tips with Kent](http://kcd.im/devtips) - (Week)daily short livestreams on YouTube
 - [How to React ⚛️](https://blog.kentcdodds.com/how-to-react--9e87f48414d2)
