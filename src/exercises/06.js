@@ -36,7 +36,6 @@ import VanillaTilt from 'vanilla-tilt'
 class Tilt extends React.Component {
   // 🐨 create a ref here as an instance property
   // 💰 rootNode = ...
-  rootNode = React.createRef()
 
   // 🐨 add a `componentDidMount` lifecycle hook (class method) here.
   // and use VanillaTilt to make your div do cool stuff.
@@ -52,7 +51,7 @@ class Tilt extends React.Component {
     // 🐨 add a `ref` prop to the root `div` here and assign it to the
     // `ref` you created on your instance.
     return (
-      <div ref={this.rootNode} className="tilt-root">
+      <div className="tilt-root">
         <div className="tilt-child">{this.props.children}</div>
       </div>
     )
