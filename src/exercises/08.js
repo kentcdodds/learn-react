@@ -14,7 +14,6 @@ import React from 'react'
 class UsernameForm extends React.Component {
   // 🐨 add some state to this form for the error.
   // 💰 initialize it with an error property that's assigned to `this.props.getErrorMessage('')`
-  state = {error: this.props.getErrorMessage('')}
   inputRef = React.createRef()
   handleSubmit = event => {
     event.preventDefault()
@@ -33,7 +32,6 @@ class UsernameForm extends React.Component {
           name="username"
           ref={this.inputRef}
           // 🐨 add your onChange handler here
-          onChange={this.handleChange}
         />
         {/* 🐨 if there's an error, then render it in a div here */}
         {/* 🐨 add a disabled prop to this button that's set to true if there's an error */}

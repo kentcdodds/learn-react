@@ -1,79 +1,89 @@
 // Making HTTP requests
 import React from 'react'
-import axios from 'axios'
 
-class UserCompany extends React.Component {
-  static defaultProps = {axios}
-  state = {company: undefined, loaded: false}
-  fetchCompany = () => {
-    this.props
-      .axios({
-        url: 'https://api.github.com/graphql',
-        method: 'post',
-        data: {
-          query: `{
-          user(login: "${this.props.username}") {
-            company
-          }
-        }`,
-        },
-        headers: {
-          Authorization: `bearer I DELETED THE TOKEN. YOU'LL HAVE TO MAKE YOUR OWN`,
-        },
-      })
-      .then(
-        response => {
-          this.setState({
-            loaded: true,
-            company: response.data.data.user.company,
-          })
-        },
-        error => {
-          this.setState({
-            error,
-            loaded: true,
-          })
-        },
-      )
+class FetchPokemon extends React.Component {
+  state = {pokemon: null, loading: false}
+  fetchPokemon = () => {
+    this.setState({loading: true})
+    fetchPokemon(this.props.pokemonName).then(
+      pokemon => this.setState({pokemon, loading: false}),
+      error => this.setState({error, loading: false}),
+    )
   }
   componentDidMount() {
-    this.fetchCompany()
+    this.fetchPokemon()
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.username !== this.props.username) {
-      this.fetchCompany()
+    if (prevProps.pokemonName !== this.props.pokemonName) {
+      this.fetchPokemon()
     }
   }
   render() {
-    return this.state.loaded
-      ? this.state.error
-        ? 'ERROR (You probably need to add your own token)'
-        : this.state.company || 'Unknown'
-      : '...'
+    return this.state.loading ? (
+      '...'
+    ) : this.state.error ? (
+      'ERROR (check your developer tools network tab)'
+    ) : (
+      <pre>{JSON.stringify(this.state.pokemon || 'Unknown', null, 2)}</pre>
+    )
   }
 }
 
+function fetchPokemon(name) {
+  const pokemonQuery = `
+    query ($name: String) {
+      pokemon(name: $name) {
+        id
+        number
+        name
+        attacks {
+          special {
+            name
+            type
+            damage
+          }
+        }
+      }
+    }
+  `
+
+  return window
+    .fetch('https://graphql-pokemon.now.sh', {
+      // learn more about this API here: https://graphql-pokemon.now.sh/
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      body: JSON.stringify({
+        query: pokemonQuery,
+        variables: {name},
+      }),
+    })
+    .then(r => r.json())
+    .then(response => response.data.pokemon)
+}
+
 class Usage extends React.Component {
-  state = {username: undefined}
+  state = {pokemonName: null}
   inputRef = React.createRef()
   handleSubmit = e => {
     e.preventDefault()
     this.setState({
-      username: this.inputRef.current.value,
+      pokemonName: this.inputRef.current.value,
     })
   }
   render() {
-    const {username} = this.state
+    const {pokemonName} = this.state
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username-input">GitHub Username</label>
-          <input id="username-input" ref={this.inputRef} />
+          <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
+          <input id="pokemonName-input" ref={this.inputRef} />
           <button type="submit">Submit</button>
         </form>
-        <div data-testid="username-display">
-          {username ? (
-            <UserCompany username={username} axios={this.props.axios} />
+        <div data-testid="pokemon-display">
+          {pokemonName ? (
+            <FetchPokemon pokemonName={pokemonName} axios={this.props.axios} />
           ) : null}
         </div>
       </div>

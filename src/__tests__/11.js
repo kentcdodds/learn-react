@@ -1,66 +1,92 @@
 import React from 'react'
 import chalk from 'chalk'
-import axiosMock from 'axios'
 import {render, wait} from '../../test/utils'
 import Usage from '../exercises-final/11'
 // import Usage from '../exercises/11'
 
-test('displays the user company', async () => {
-  const axiosMock = jest.fn(() =>
+beforeEach(() => {
+  jest
+    .spyOn(window, 'fetch')
+    .mockImplementation(() =>
+      Promise.resolve({json: () => Promise.resolve({data: {pokemon: {}}})}),
+    )
+})
+
+afterEach(() => {
+  window.fetch.mockRestore()
+})
+
+test('displays the pokemon', async () => {
+  window.fetch.mockImplementationOnce(() =>
     Promise.resolve({
-      data: {data: {user: {company: 'Jimmy Johns'}}},
+      json: () => Promise.resolve({data: {pokemon: {id: 'fake-id'}}}),
     }),
   )
-  const {getByLabelText, getByText, getByTestId} = render(
-    <Usage axios={axiosMock} />,
-  )
-  getByLabelText(/username/i).value = 'jeffry'
-  getByText(/submit/i).click()
-  await wait(() =>
-    expect(getByTestId('username-display')).toHaveTextContent('Jimmy Johns'),
-  )
-  expect(axiosMock).toHaveBeenCalledTimes(1)
-  const gitHubRequest = {
-    data: {
-      query: expect.any(String),
-    },
-    headers: {
-      Authorization: expect.any(String),
-    },
-    method: 'post',
-    url: 'https://api.github.com/graphql',
-  }
-  expect(axiosMock).toHaveBeenCalledWith(gitHubRequest)
-  expect(axiosMock.mock.calls[0][0].data.query).toMatch('jeffry')
-  axiosMock.mockClear()
+  const {getByLabelText, getByText, getByTestId} = render(<Usage />)
+  const input = getByLabelText(/pokemon/i)
+  const submit = getByText(/submit/i)
 
-  axiosMock.mockImplementationOnce(() =>
+  // verify that an initial request is made in componentDidMount
+  input.value = 'jeffry'
+  submit.click()
+  await wait(() =>
+    expect(getByTestId('pokemon-display')).toHaveTextContent('fake-id'),
+  )
+  expect(window.fetch).toHaveBeenCalledTimes(1)
+  expect(window.fetch).toHaveBeenCalledWith('https://graphql-pokemon.now.sh', {
+    method: 'POST',
+    headers: {'content-type': 'application/json;charset=UTF-8'},
+    // if this assertion fails, make sure that the pokemon name is being passed
+    body: expect.stringMatching(/jeffry/),
+  })
+  window.fetch.mockClear()
+
+  // verify that a request is made when props change
+  window.fetch.mockImplementationOnce(() =>
     Promise.resolve({
-      data: {data: {user: {company: 'McDonalds'}}},
+      json: () => Promise.resolve({data: {pokemon: {id: 'id-that-is-fake'}}}),
     }),
   )
-  getByLabelText(/username/i).value = 'fred'
-  getByText(/submit/i).click()
+  input.value = 'fred'
+  submit.click()
   await wait(() =>
-    expect(getByTestId('username-display')).toHaveTextContent('McDonalds'),
+    expect(getByTestId('pokemon-display')).toHaveTextContent('id-that-is-fake'),
   )
-  expect(axiosMock).toHaveBeenCalledTimes(1)
-  expect(axiosMock).toHaveBeenCalledWith(gitHubRequest)
-  expect(axiosMock.mock.calls[0][0].data.query).toMatch('fred')
-  axiosMock.mockClear()
+  expect(window.fetch).toHaveBeenCalledTimes(1)
+  expect(window.fetch).toHaveBeenCalledWith('https://graphql-pokemon.now.sh', {
+    method: 'POST',
+    headers: {'content-type': 'application/json;charset=UTF-8'},
+    // if this assertion fails, make sure that the pokemon name is being passed
+    body: expect.stringMatching(/fred/),
+  })
+  window.fetch.mockClear()
 
-  getByText(/submit/i).click()
+  // verify that when props remain the same a request is not made
+  submit.click()
   try {
-    expect(axiosMock).not.toHaveBeenCalled()
+    expect(window.fetch).not.toHaveBeenCalled()
   } catch (error) {
     error.message = [
       chalk.red(
-        `🚨  Make certain that in your componentDidUpdate, you check whether the previous props username changed before making another request. 🚨`,
+        `🚨  Make certain that in your componentDidUpdate, you check whether the previous props pokemon changed before making another request. 🚨`,
       ),
       error.message,
     ].join('\n')
     throw error
   }
+
+  // verify that an error renders an error
+  window.fetch.mockImplementationOnce(() =>
+    Promise.reject({
+      error: 'some fake error',
+    }),
+  )
+
+  input.value = 'george'
+  submit.click()
+  await wait(() =>
+    expect(getByTestId('pokemon-display')).toHaveTextContent(/error/i),
+  )
 })
 
 //////// Elaboration & Feedback /////////

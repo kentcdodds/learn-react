@@ -1,23 +1,11 @@
 import React from 'react'
-import ReactDOMServer from 'react-dom/server.browser'
-import prettyFormat from 'pretty-format'
+import {render} from 'react-testing-library'
 import Usage from '../exercises-final/02-extra'
 // import Usage from '../exercises/02-extra'
 
-const {DOMElement, DOMCollection} = prettyFormat.plugins
-
 test('renders the correct styles', () => {
-  // we're doing this renderToStaticMarkup business because
-  // for some reason rendering it like normally doesn't give
-  // us the style props correctly.
-  const html = ReactDOMServer.renderToStaticMarkup(<Usage />)
-  const div = document.createElement('div')
-  div.innerHTML = html
-
-  const formattedHTML = prettyFormat(div.firstChild, {
-    plugins: [DOMElement, DOMCollection],
-  })
-  expect(formattedHTML).toMatchSnapshot()
+  const {container} = render(<Usage />)
+  expect(container).toMatchSnapshot()
 })
 
 //////// Elaboration & Feedback /////////
