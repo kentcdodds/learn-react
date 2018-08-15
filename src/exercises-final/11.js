@@ -82,9 +82,7 @@ class Usage extends React.Component {
           <button type="submit">Submit</button>
         </form>
         <div data-testid="pokemon-display">
-          {pokemonName ? (
-            <FetchPokemon pokemonName={pokemonName} axios={this.props.axios} />
-          ) : null}
+          {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
         </div>
       </div>
     )
