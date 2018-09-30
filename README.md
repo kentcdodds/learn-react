@@ -49,7 +49,7 @@ After you've made sure to have the correct things (and versions) installed, you
 should be able to just run a few commands to get set up:
 
 ```
-git clone https://github.com/kentcdodds/learn-react.git
+git clone https://github.com/kentcdodds/learn-react.git --branch 2018-FS
 cd learn-react
 npm run setup --silent
 ```
