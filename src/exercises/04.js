@@ -63,8 +63,15 @@ import React from 'react'
 // 🐨 Below, fill out the Counter component so that it manages the state of how
 // many times the the button is clicked. The text of the button should be the
 // number of times the button has been clicked.
+
+function Counter() {
+  return <button />
+}
+
+// 💯 make the counter accept props called "step" and "initialCount" and make
+// the counter increment by the given step and start at the given count
 //
-// 💰 You'll need to know the current count to increment it by one. State
+// 💯 You'll need to know the current count to increment it by one. State
 // updater functions (like `setName` above) can accept a function which will be
 // passed the current state and returns what you want the state to be set to:
 //
@@ -76,10 +83,6 @@ import React from 'react'
 // You can make things work without doing it this way, but as a bonus try to
 // figure out how to make that work as well. We'll cover more about why this
 // is important when we talk about asynchronously updating the state.
-
-function Counter() {
-  return <button />
-}
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.

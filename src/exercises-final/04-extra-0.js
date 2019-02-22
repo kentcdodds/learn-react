@@ -1,9 +1,9 @@
 // Component hooks and simple state
 import React from 'react'
 
-function Counter() {
-  const [count, setCount] = React.useState(0)
-  const increment = () => setCount(count + 1)
+function Counter({step = 1, initialCount = 0}) {
+  const [count, setCount] = React.useState(initialCount)
+  const increment = () => setCount(count + step)
   return <button onClick={increment}>{count}</button>
 }
 

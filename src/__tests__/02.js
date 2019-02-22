@@ -6,6 +6,11 @@ import Usage from '../exercises-final/02'
 
 const {DOMElement, DOMCollection} = prettyFormat.plugins
 
+expect.addSnapshotSerializer({
+  test: val => typeof val === 'string',
+  print: val => val,
+})
+
 test('renders the correct styles', () => {
   // we're doing this renderToStaticMarkup business because
   // for some reason rendering it like normally doesn't give

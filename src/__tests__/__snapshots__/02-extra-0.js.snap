@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the correct styles 1`] = `
+<div>
+  <div
+    class="box  box--small"
+    style="padding-left:20px;background-color:lightblue"
+  >
+    small lightblue box
+  </div>
+  <div
+    class="box  box--medium"
+    style="padding-left:20px;background-color:pink"
+  >
+    medium pink box
+  </div>
+  <div
+    class="box  box--large"
+    style="padding-left:20px;background-color:orange"
+  >
+    large orange box
+  </div>
+  <div
+    class="box  "
+    style="padding-left:20px"
+  >
+    sizeless box
+  </div>
+</div>
+`;

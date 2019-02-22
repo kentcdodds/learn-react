@@ -1,10 +1,15 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server.browser'
 import prettyFormat from 'pretty-format'
-import Usage from '../exercises-final/02-extra'
-// import Usage from '../exercises/02-extra'
+import Usage from '../exercises-final/02-extra-0'
+// import Usage from '../exercises/02-extra-0'
 
 const {DOMElement, DOMCollection} = prettyFormat.plugins
+
+expect.addSnapshotSerializer({
+  test: val => typeof val === 'string',
+  print: val => val,
+})
 
 test('renders the correct styles', () => {
   // we're doing this renderToStaticMarkup business because
@@ -27,7 +32,7 @@ test('renders the correct styles', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react&e=02-extra&em=
+http://ws.kcd.im/?ws=learn%20react&e=02-extra-0&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
