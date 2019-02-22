@@ -65,6 +65,11 @@ import React from 'react'
 // number of times the button has been clicked.
 
 function Counter() {
+  // 🐨 use React.useState here
+  // 🐨 create an increment function that calls the state updater you get from
+  //    React.useState to increment the count
+  // 🐨 render the count you get from React.useState inside the button and use
+  //    your increment function as the onClick handler.
   return <button />
 }
 
