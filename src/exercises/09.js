@@ -1,108 +1,59 @@
-// Controlled Form Fields
+// Interact with the DOM
 import React from 'react'
+// eslint-disable-next-line no-unused-vars
+import VanillaTilt from 'vanilla-tilt'
 
-// here, we want to be able to update the state of the form
-// fields based on changes to other fields. This uses a pattern
-// called "controlled props" which is supported by all form
-// fields in React.
+// Often when working with React you'll need to integrate with UI libraries.
+// Some of these need to work directly with the DOM. Remember that when you
+// do: <div>hi</div> that's actually syntactic sugar for a React.createElement
+// so you don't actually have access to DOM nodes in your render method.
+// In fact, DOM nodes aren't created at all until the ReactDOM.render method
+// is called. Your component's render method is really just responsible with
+// creating and returning React Elements and has nothing to do with the DOM
+// in particular.
 //
-// To control the value of (most) form fields, you simply pass
-// a `value` prop to the element and it becomes controlled.
-// From there on, React will cease to attempt to update the value
-// itself as the user attempts to make changes to it. Instead,
-// you are responsible for making sure that it's kept up to date.
+// So to get access to the DOM, you need to ask React to give you access to
+// a particular DOM node when it renders your component. The way this happens
+// is through a special prop called `ref`.
 //
-// You can do this with the `onChange` prop. Whenever the user
-// makes a change to the field value, react will call your change
-// handler and you can use `event.target` to know what the new
-// value should be.
+// Here's a simple example of using the `ref` prop:
+//
+// const myDiv = React.createRef()
+// const ui = <div ref={myDiv}>hi</div>
+// ReactDOM.render(ui, document.getElementById('root'))
+//
+// console.log(myDiv.current) // <-- myDiv.current is the div DOM node!
+//
+// Normally when you use this in a react class, you'll make the
+// ref (`myDiv`) an instance property of the class (similar to what we
+// do with `state`).
+//
+// After the component has been rendered, it's considered "mounted." By
+// this point, the ref should have its `current` property set to the
+// DOM node. So often you'll do direct DOM interactions/manipulations
+// in the `componentDidMount` lifecycle hook.
 
-const availableOptions = ['apple', 'grape', 'cherry', 'orange', 'pear', 'peach']
-class MyFancyForm extends React.Component {
-  // because React will not be able to update the state of the fields
-  // we'll need to store that state ourselves.
-  // 🐨 initialize state here for each of the fields:
-  //   commaSeparated: '' (for the <input />)
-  //   multiline: '' (for the <textarea />)
-  //   multiSelect: [] (for the <select />)
-  //
-  // Now we need to add an event handler for each of the form fields.
-  // The purpose of each event handler is to get the value from the
-  // `event.target`, turn that value into an array, and pass that
-  // array into `setStateForAllFields` along with an override for
-  // the current field. As an example, I'll give you one of the
-  // handlers.
-  handleCommaSeparatedChange = event => {
-    const {value} = event.target
-    const allVals = value
-      .split(',')
-      .map(v => v.trim())
-      .filter(Boolean)
-    this.setStateForAllFields(allVals, {commaSeparated: value})
-  }
-  // 🐨 add handleMultilineChange for the <textarea />
-  // 💰 you'll get the value from `event.target.value`
-  // and you'll need to split it by newlines (\n)
-  //
-  // 🐨 add handleMultiSelectChange for the <select />
-  // 💰 you'll get the value from `event.target.selectedOptions`
-  // which is an HTMLCollection of <option /> elements.
-  // You can turn this into an Array with `Array.from` and map
-  // that to the option values with `.map(o => o.value)`
+class Tilt extends React.Component {
+  // 🐨 create a ref here as an instance property
+  // 💰 rootNode = ...
 
-  setStateForAllFields(arrayOfItems, overrides) {
-    // I'm leaving this for you because I love you.
-    this.setState({
-      commaSeparated: arrayOfItems.join(','),
-      multiline: arrayOfItems.join('\n'),
-      multiSelect: arrayOfItems.filter(v => availableOptions.includes(v)),
-      ...overrides,
-    })
-  }
+  // 🐨 add a `componentDidMount` lifecycle hook (class method) here.
+  // and use VanillaTilt to make your div do cool stuff.
+  // 💰 like this:
+  // VanillaTilt.init(yourDOMNode, {
+  //   max: 25,
+  //   speed: 400,
+  //   glare: true,
+  //   'max-glare': 0.5,
+  // })
+  //
   render() {
+    // 🐨 add a `ref` prop to the root `div` here and assign it to the
+    // `ref` you created on your instance.
     return (
-      <form>
-        <div>
-          <label>
-            comma separated values:
-            <br />
-            <input
-              // 🐨 add a value prop for the commaSeparated state
-              // 🐨 also add an onChange for your `handleCommaSeparatedChange` handler
-              type="text"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiline values:
-            <br />
-            <textarea
-              // 🐨 add a value prop for the multiline state
-              // 🐨 also add an onChange for your `handleMultilineChange` handler
-              rows={availableOptions.length}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiSelect values:
-            <br />
-            <select
-              // 🐨 add a value prop for the state of the multiSelect
-              // 🐨 also add an onChange for your `handleMultiSelectChange` handler
-              size={availableOptions.length}
-              multiple
-            >
-              {availableOptions.map(optionValue => (
-                <option key={optionValue} value={optionValue}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </form>
+      <div className="tilt-root">
+        <div className="tilt-child">{this.props.children}</div>
+      </div>
     )
   }
 }
@@ -111,8 +62,14 @@ class MyFancyForm extends React.Component {
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the code above.
 function Usage() {
-  return <MyFancyForm />
+  return (
+    <div className="totally-centered">
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+    </div>
+  )
 }
-Usage.title = 'Controlled Form Fields'
+Usage.title = 'Interact with the DOM'
 
 export default Usage

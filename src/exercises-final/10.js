@@ -1,49 +1,33 @@
-// Rendering Arrays
+// Basic Forms
 import React from 'react'
 
-const allItems = [
-  {id: 'a', value: 'apple'},
-  {id: 'o', value: 'orange'},
-  {id: 'g', value: 'grape'},
-  {id: 'p', value: 'pear'},
-]
-class App extends React.Component {
-  state = {items: []}
-  addItem = () => {
-    this.setState(({items}) => ({
-      items: [...items, allItems.find(i => !items.includes(i))],
-    }))
-  }
-  removeItem = item => {
-    this.setState(({items}) => ({
-      items: items.filter(i => i !== item),
-    }))
+class UsernameForm extends React.Component {
+  inputRef = React.createRef()
+  handleSubmit = event => {
+    event.preventDefault()
+    this.props.onSubmitUsername(this.inputRef.current.value)
   }
   render() {
-    const {items} = this.state
     return (
-      <div>
-        <button
-          disabled={items.length >= allItems.length}
-          onClick={this.addItem}
-        >
-          +
-        </button>
-        {items.map(i => (
-          <div key={i.id}>
-            <button onClick={() => this.removeItem(i)}>-</button>
-            {i.value}:
-            <input />
-          </div>
-        ))}
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <label htmlFor="name-input">Username:</label>
+        <input
+          id="name-input"
+          type="text"
+          name="username"
+          ref={this.inputRef}
+        />
+        <button type="submit">Submit</button>
+      </form>
     )
   }
 }
 
-function Usage() {
-  return <App />
+function Usage({
+  onSubmitUsername = username => console.log('username', username),
+}) {
+  return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
-Usage.title = 'Rendering Arrays'
+Usage.title = 'Basic Forms'
 
 export default Usage

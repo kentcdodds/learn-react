@@ -1,60 +1,65 @@
-// Dynamic Forms
+// More Practice with State
 import React from 'react'
 
-class UsernameForm extends React.Component {
-  state = {error: this.props.getErrorMessage('')}
-  inputRef = React.createRef()
-  handleSubmit = event => {
-    event.preventDefault()
-    this.props.onSubmitUsername(this.inputRef.current.value)
+const buttonStyles = {
+  border: '1px solid #ccc',
+  background: '#fff',
+  fontSize: '2em',
+  padding: 15,
+  margin: 5,
+  width: 200,
+}
+const labelStyles = {
+  fontSize: '5em',
+  display: 'block',
+}
+
+class StopWatch extends React.Component {
+  initialState = {lapse: 0, running: false}
+  state = this.initialState
+  handleRunClick = () => {
+    if (this.state.running) {
+      clearInterval(this.intervalId)
+    } else {
+      const startTime = Date.now() - this.state.lapse
+      this.intervalId = setInterval(() => {
+        this.setState({
+          lapse: Date.now() - startTime,
+        })
+      })
+    }
+    this.setState(state => ({running: !state.running}))
   }
-  handleChange = event => {
-    const {value} = event.target
-    this.setState({
-      error: this.props.getErrorMessage(value),
-    })
+  handleClearClick = () => {
+    clearInterval(this.intervalId)
+    this.setState(this.initialState)
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
   render() {
-    const {error} = this.state
+    const {lapse, running} = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name-input">Username:</label>
-        <input
-          id="name-input"
-          type="text"
-          name="username"
-          ref={this.inputRef}
-          onChange={this.handleChange}
-        />
-        {error ? <div style={{color: 'red'}}>{error}</div> : null}
-        <button disabled={Boolean(error)} type="submit">
-          Submit
+      <div>
+        <label style={labelStyles}>{lapse}ms</label>
+        <button onClick={this.handleRunClick} style={buttonStyles}>
+          {running ? 'Stop' : 'Start'}
         </button>
-      </form>
+        <button onClick={this.handleClearClick} style={buttonStyles}>
+          Clear
+        </button>
+      </div>
     )
   }
 }
 
-function Usage({
-  onSubmitUsername = username => console.log('username', username),
-}) {
+function Usage() {
   return (
-    <UsernameForm
-      onSubmitUsername={onSubmitUsername}
-      getErrorMessage={value => {
-        if (value.length < 3) {
-          return `Value must be at least 3 characters, but is only ${
-            value.length
-          }`
-        }
-        if (!value.includes('s')) {
-          return `Value does not include "s" but it should!`
-        }
-        return null
-      }}
-    />
+    <div style={{textAlign: 'center'}}>
+      <StopWatch />
+    </div>
   )
 }
-Usage.title = 'Dynamic Forms'
+Usage.title = 'More State'
 
 export default Usage

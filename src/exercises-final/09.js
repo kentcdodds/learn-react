@@ -1,93 +1,35 @@
-// Controlled Form Fields
+// Interact with the DOM
 import React from 'react'
+import VanillaTilt from 'vanilla-tilt'
 
-const availableOptions = ['apple', 'grape', 'cherry', 'orange', 'pear', 'peach']
-class MyFancyForm extends React.Component {
-  state = {
-    multiline: '',
-    commaSeparated: '',
-    multiSelect: [],
-  }
-  handleCommaSeparatedChange = event => {
-    const {value} = event.target
-    const allVals = value
-      .split(',')
-      .map(v => v.trim())
-      .filter(Boolean)
-    this.setStateForAllFields(allVals, {commaSeparated: value})
-  }
-  handleMultilineChange = event => {
-    const {value} = event.target
-    const allVals = value
-      .split('\n')
-      .map(v => v.trim())
-      .filter(Boolean)
-    this.setStateForAllFields(allVals, {multiline: value})
-  }
-  handleMultiSelectChange = event => {
-    const allVals = Array.from(event.target.selectedOptions).map(o => o.value)
-    this.setStateForAllFields(allVals)
-  }
-  setStateForAllFields(arrayOfItems, overrides) {
-    this.setState({
-      commaSeparated: arrayOfItems.join(','),
-      multiline: arrayOfItems.join('\n'),
-      multiSelect: arrayOfItems.filter(v => availableOptions.includes(v)),
-      ...overrides,
+class Tilt extends React.Component {
+  rootRef = React.createRef()
+  componentDidMount() {
+    VanillaTilt.init(this.rootRef.current, {
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
     })
   }
   render() {
-    const {commaSeparated, multiline, multiSelect} = this.state
     return (
-      <form>
-        <div>
-          <label>
-            comma separated values:
-            <br />
-            <input
-              type="text"
-              value={commaSeparated}
-              onChange={this.handleCommaSeparatedChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiline values:
-            <br />
-            <textarea
-              value={multiline}
-              rows={availableOptions.length}
-              onChange={this.handleMultilineChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiSelect values:
-            <br />
-            <select
-              multiple
-              value={multiSelect}
-              size={availableOptions.length}
-              onChange={this.handleMultiSelectChange}
-            >
-              {availableOptions.map(optionValue => (
-                <option key={optionValue} value={optionValue}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </form>
+      <div ref={this.rootRef} className="tilt-root">
+        <div className="tilt-child">{this.props.children}</div>
+      </div>
     )
   }
 }
 
 function Usage() {
-  return <MyFancyForm />
+  return (
+    <div className="totally-centered">
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+    </div>
+  )
 }
-Usage.title = 'Controlled Form Fields'
+Usage.title = 'Interact with the DOM'
 
 export default Usage

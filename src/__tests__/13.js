@@ -1,11 +1,10 @@
 import React from 'react'
 import {render} from '../../test/utils'
-import Usage from '../exercises-final/06'
-// import Usage from '../exercises/06'
+import Usage from '../exercises-final/13'
+// import Usage from '../exercises/13'
 
-test('calls VanillaTilt.init with the root node', () => {
-  const {container} = render(<Usage />)
-  expect(container.querySelector('.tilt-root')).toHaveProperty('vanillaTilt')
+test('renders', () => {
+  render(<Usage />)
 })
 
 //////// Elaboration & Feedback /////////
@@ -15,7 +14,7 @@ test('calls VanillaTilt.init with the root node', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react&e=06&em=
+http://ws.kcd.im/?ws=learn%20react&e=13&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
