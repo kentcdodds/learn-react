@@ -1,21 +1,15 @@
-// Class Components and simple state
+// Component hooks and simple state
 import React from 'react'
 
-class Counter extends React.Component {
-  state = {count: 0}
-  handleClick = () => {
-    this.setState(({count}) => ({
-      count: count + 1,
-    }))
-  }
-  render() {
-    return <button onClick={this.handleClick}>{this.state.count}</button>
-  }
+function Counter() {
+  const [count, setCount] = React.useState(0)
+  const increment = () => setCount(c => c + 1)
+  return <button onClick={increment}>{count}</button>
 }
 
 function Usage() {
   return <Counter />
 }
-Usage.title = 'Class Components and simple state'
+Usage.title = 'Component hooks and simple state'
 
 export default Usage

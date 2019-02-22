@@ -1,48 +1,84 @@
-// Class Components and simple state
+// Component hooks and simple state
 import React from 'react'
 
-// normally an interactive application will need to hold state
-// somewhere. In React, that's the `state` property of each
-// component instance. Here's a simple example of a component
-// that uses state and event handlers to update that state:
+// Normally an interactive application will need to hold state somewhere.
+// In React, you use special functions called "hooks" to do this.
+// Common built-in hooks include:
+// - React.useState
+// - React.useEffect
+// - React.useContext
+// - React.useRef
+// - React.useReducer
 //
-// class NameInput extends React.Component {
-//   state = {nameInputValue: ''}
-//   handleChange = event => {
-//     const inputNode = event.target
-//     this.setState({nameInputValue: inputNode.value})
-//   }
-//   render() {
-//     return (
-//       <div>
-//         <input onChange={this.handleChange} />
-//         {this.state.nameInputValue}
-//       </div>
-//     )
-//   }
+// Each of these is a special function that you can call inside your custom
+// React component function to store data (like state) or perform actions
+// (or side-effects). There are a few more built-in hooks that have special
+// use cases, but the ones above are what you'll be using most of the time.
+//
+// Each of the hooks each has a unique API. Some return a value
+// (like React.useRef and React.useContext), others return a pair of values
+// (like React.useState and React.useReducer), and others return nothing at
+// all (like React.useEffect).
+//
+// Here's an example of a component that uses the `useState` hook and an
+// onChange event handler to update that state:
+//
+// function NameInput() {
+//   const [name, setName] = React.useState('')
+//   const handleChange = event => setName(event.target.value)
+//   return (
+//     <>
+//       <label>
+//         Name: <input defaultValue={name} onChange={handleChange} />
+//       </label>
+//       <div>You Typed: {name}</div>
+//     </>
+//   )
 // }
 //
-// 🐨 Below, fill out the Counter component so that it
-// manages the state of how many times the the button is clicked.
-// The text of the button should be the number of times the
-// button has been clicked.
+// React.useState is a function that accepts a single argument. That argument
+// is the initial state for the NameInput instance of the component. In our
+// case, the input will start as an empty string.
 //
-// 💰 You'll need to know the current count to increment it by one.
-// The `setState` API can accept a function which will be passed
-// the current state:
-// this.setState(currentState => {
-//   return { /* the new state */ }
+// React.useState returns a pair of values. It does this by returning an array
+// with two elements (and we use destructuring syntax to assign each of those
+// values to distinct variables). The first of the pair is the state value and
+// the second is a function we can call to update the state. We can name these
+// variables whatever we want. Common convention is to choose a name for the
+// state variable, then prefix `set` in front of that for the updater function.
+//
+// State can be defined as: data that changes over time. So how does this work
+// over time? When the input's value is changed, our handleChange function will
+// be called with the change event object. Then we can use that event to access
+// the input via `event.target` and we can access the input's value from that so
+// we can update the `name` state in our component by calling the function to
+// update the state.
+//
+// When we call `setName`, that tells React to re-render our component. When it
+// does this, the entire NameInput function is re-run, so when React.useState
+// is called this time, the value we get back is the value that we called
+// `setName` with. And it continues like that until NameInput is unmounted
+// (removed from the application), or the user closes the application.
+//
+// 🐨 Below, fill out the Counter component so that it manages the state of how
+// many times the the button is clicked. The text of the button should be the
+// number of times the button has been clicked.
+//
+// 💰 You'll need to know the current count to increment it by one. State
+// updater functions (like `setName` above) can accept a function which will be
+// passed the current state and returns what you want the state to be set to:
+//
+// setCount(currentCount => {
+//   // calculate newCount variable
+//   return newCount
 // })
-// You'll probably want to use that :)
 //
-// 💰 make sure that your handleClick is an assignment to an arrow
-// function like the handleChange is above. We'll talk about this more
-// during the solution.
+// You can make things work without doing it this way, but as a bonus try to
+// figure out how to make that work as well. We'll cover more about why this
+// is important when we talk about asynchronously updating the state.
 
-class Counter extends React.Component {
-  render() {
-    return <button />
-  }
+function Counter() {
+  return <button />
 }
 
 // Don't make changes to the Usage component. It's here to show you how your
@@ -51,6 +87,6 @@ class Counter extends React.Component {
 function Usage() {
   return <Counter />
 }
-Usage.title = 'Class Components and simple state'
+Usage.title = 'Component hooks and simple state'
 
 export default Usage
