@@ -1,87 +1,94 @@
-// Stopwatch: Advanced State
+// Tic Tac Toe: Advanced State
 import React from 'react'
 
-const buttonStyles = {
-  border: '1px solid #ccc',
-  background: '#fff',
-  fontSize: '2em',
-  padding: 15,
-  margin: 5,
-  width: 200,
-}
-const labelStyles = {
-  fontSize: '5em',
-  display: 'block',
-}
+function Board() {
+  const [squares, setSquares] = React.useState(Array(9).fill(null))
+  const [xIsNext, setXIsNext] = React.useState(true)
 
-function stopwatchReducer(state, action) {
-  switch (action.type) {
-    case 'TOGGLE_RUNNING': {
-      return {...state, running: !state.running}
+  function handleClick(square) {
+    if (calculateWinner(squares) || squares[square]) {
+      return
     }
-    case 'INCREMENT_LAPSE': {
-      if (state.running) {
-        return {
-          ...state,
-          lapse: action.now - action.startTime,
-        }
-      } else {
-        return state
-      }
-    }
-    case 'CLEAR': {
-      return {lapse: 0, running: false}
-    }
-    default: {
-      throw new Error(`Unsupported type ${action.type}`)
-    }
-  }
-}
-
-function Stopwatch() {
-  const [{lapse, running}, dispatch] = React.useReducer(stopwatchReducer, {
-    lapse: 0,
-    running: false,
-  })
-
-  React.useEffect(() => {
-    if (running) {
-      const startTime = Date.now() - lapse
-      const rafId = requestAnimationFrame(() => {
-        dispatch({type: 'INCREMENT_LAPSE', now: Date.now(), startTime})
-      })
-      return () => cancelAnimationFrame(rafId)
-    }
-  }, [running, lapse])
-
-  function handleRunClick() {
-    dispatch({type: 'TOGGLE_RUNNING'})
+    const squaresCopy = [...squares]
+    squaresCopy[square] = xIsNext ? 'X' : 'O'
+    setXIsNext(x => !x)
+    setSquares(squaresCopy)
   }
 
-  function handleClearClick() {
-    dispatch({type: 'CLEAR'})
+  const renderSquare = i => (
+    <button className="square" onClick={() => handleClick(i)}>
+      {squares[i]}
+    </button>
+  )
+
+  const winner = calculateWinner(squares)
+  let status
+  if (winner) {
+    status = 'Winner: ' + winner
+  } else if (squares.every(Boolean)) {
+    status = `Scratch: Cat's game`
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O')
   }
 
   return (
     <div>
-      <label style={labelStyles}>{lapse}ms</label>
-      <button onClick={handleRunClick} style={buttonStyles}>
-        {running ? 'Stop' : 'Start'}
-      </button>
-      <button onClick={handleClearClick} style={buttonStyles}>
-        Clear
-      </button>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+      </div>
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
     </div>
   )
 }
 
-function Usage() {
+function Game() {
   return (
-    <div style={{textAlign: 'center'}}>
-      <Stopwatch />
+    <div className="game">
+      <div className="game-board">
+        <Board />
+      </div>
     </div>
   )
 }
-Usage.title = 'Stopwatch: advanced state'
+
+// Don't make changes to the Usage component. It's here to show you how your
+// component is intended to be used and is used in the tests.
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ]
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a]
+    }
+  }
+  return null
+}
+
+function Usage() {
+  return <Game />
+}
+Usage.title = 'Tic Tac Toe: Advanced State'
 
 export default Usage

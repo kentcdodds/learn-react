@@ -1,6 +1,7 @@
 import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
+import loadable from 'react-loadable'
 
 const files = [
   '01',
@@ -21,17 +22,17 @@ const files = [
 ]
 
 const pages = files.reduce((p, filename, index, fullArray) => {
-  // const previousFilename = fullArray[index - 1]
-  // const nextFilename = fullArray[index + 1]
   const final = require(`./exercises-final/${filename}`)
   Object.assign(final, {
     previous: fullArray[index - 1],
     next: fullArray[index + 1],
+    isolatedPath: `/isolated/exercises-final/${filename}`,
   })
   const exercise = require(`./exercises/${filename}`)
   Object.assign(exercise, {
     previous: fullArray[index - 1],
     next: fullArray[index + 1],
+    isolatedPath: `/isolated/exercises/${filename}`,
   })
   p[filename] = {
     exercise,
@@ -168,16 +169,25 @@ function NavigationFooter({exerciseId, type}) {
 function FullPage({type, match}) {
   const {exerciseId} = match.params
   const page = pages[exerciseId]
-  const Usage = pages[exerciseId][type].default
+  const {default: Usage, isolatedPath} = pages[exerciseId][type]
   return (
     <div>
-      <div style={{marginLeft: 10}}>
+      <div
+        style={{
+          marginLeft: 10,
+          marginRight: 10,
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <Link to={`/${exerciseId}`}>
           <span role="img" aria-label="back">
             👈
           </span>
           Exercise Page
         </Link>
+        <Link to={isolatedPath}>isolated</Link>
       </div>
       <div style={{textAlign: 'center'}}>
         <h1>{page.title}</h1>
@@ -202,19 +212,41 @@ function FullPage({type, match}) {
   )
 }
 
+class Isolated extends React.Component {
+  Component = loadable({
+    loader: () => {
+      const {moduleName} = this.props.match.params
+      return this.props.type === 'exercise'
+        ? import(`./exercises/${moduleName}`)
+        : this.props.type === 'final'
+        ? import(`./exercises-final/${moduleName}`)
+        : null
+    },
+    loading: () => <div>Loading...</div>,
+  })
+  render() {
+    return (
+      <div
+        style={{
+          padding: 30,
+          height: '100%',
+          display: 'grid',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div>
+          <this.Component />
+        </div>
+      </div>
+    )
+  }
+}
+
 function Home() {
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Learn React</h1>
-      <p>
-        This is the app that shows a rendered version of all the exercises and
-        final versions for the Learn React workshop. There are a few more
-        introductory exercises that are not shown here in the interest of
-        starting more simply for those. Please learn more by going to{' '}
-        <a href="https://github.com/kentcdodds/learn-react">
-          the Learn React repo
-        </a>
-      </p>
+      <h1 style={{textAlign: 'center'}}>Advanced React Component Patterns</h1>
       <div>
         {filesAndTitles.map(({title, filename}) => {
           return (
@@ -253,6 +285,16 @@ function App() {
           path={`/:exerciseId/final`}
           render={props => <FullPage {...props} type="final" />}
           exact={true}
+        />
+        <Route
+          path={`/isolated/exercises/:moduleName`}
+          exact={true}
+          render={props => <Isolated {...props} type="exercise" />}
+        />
+        <Route
+          path={`/isolated/exercises-final/:moduleName`}
+          exact={true}
+          render={props => <Isolated {...props} type="final" />}
         />
         <Route
           render={() => (

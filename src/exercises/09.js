@@ -1,101 +1,95 @@
-// Stopwatch: Advanced State
+// Tic Tac Toe: Advanced State
 import React from 'react'
 
-// NOTES: Here are some things you'll need to know:
-//
-// 1. `setInterval` is a JavaScript timer API which works like this:
-//
-// const intervalId = setInterval(() => {
-//   console.log('hello world')
-// }, 100)
-//
-// This will cause the text "hello world" to be logged to the console every
-// 100 milliseconds. The intervalId is a variable that can be used to stop
-// the interval from running like so:
-//
-// clearInterval(intervalId)
+// TODO: Make notes
+function Board() {
+  const [squares, setSquares] = React.useState(Array(9).fill(null))
+  const [xIsNext, setXIsNext] = React.useState(true)
 
-// 🐨 you'll want these styles to make things look nice :)
-
-// eslint-disable-next-line no-unused-vars
-const buttonStyles = {
-  border: '1px solid #ccc',
-  background: '#fff',
-  fontSize: '2em',
-  padding: 15,
-  margin: 5,
-  width: 200,
-}
-// eslint-disable-next-line no-unused-vars
-const labelStyles = {
-  fontSize: '5em',
-  display: 'block',
-}
-
-function Stopwatch() {
-  // 🐨 You'll need to initialize your state here.
-  // You have three things you need to keep track of:
-  // 1. `lapse` - the number of milliseconds since "Start" was clicked.
-  // 2. `running` - whether the stopwatch is running (so you can display "Start"
-  //     or "Stop" and so you know what to do when the user clicks that button)
-  // 3. `intervalId` - the ID to the interval that's currently running (so you
-  //    can stop the interval from running when the user clicks "Stop" or
-  //    "Clear" or if this component is removed from the page.)
-  //
-  // 💰 you'll call useState three times, first for the `lapse` state (starts at
-  // `0`), second for the `running` state (starts at `false`), and third for the
-  // `intervalId` state (which can start with null).
-
-  // 💰 there are several places where you need to call
-  // `clearInterval(intervalId)` so you can create a small `stopStopwatch`
-  // function here if you want.
-
-  // What happens if this component is unmounted (removed from the page) when
-  // the stopwatch is still running? We'll be calling `setLapse` on a component
-  // that no longer exists! We need to make sure that when this component is
-  // unmounted, we clear the interval. You can do this by providing a cleanup
-  // function to a React.useEffect call that only runs once.
-  //
-  // 🐨 Create an effect callback that does nothing but returns a function that
-  // clears the interval. Provide an empty inputs array to ensure that it's only
-  // called once.
-
-  // eslint-disable-next-line no-unused-vars
-  function handleRunClick() {
-    // if the stopwatch is running, then we just need to stop the stopwatch
-    // otherwise, we need to start it up again:
-    //   - get the start time via: Date.now() - lapse
-    //   - start the interval (don't forget to store the intervalId!)
-    //   - In the interval callback, update the lapse to: Date.now() - startTime
-    //   - make the interval run ASAP by passing `0` as the time (second argument to setInterval)
-    // make sure to toggle the running state
+  function handleClick(square) {
+    if (calculateWinner(squares) || squares[square]) {
+      return
+    }
+    const squaresCopy = [...squares]
+    squaresCopy[square] = xIsNext ? 'X' : 'O'
+    setXIsNext(x => !x)
+    setSquares(squaresCopy)
   }
 
-  // eslint-disable-next-line no-unused-vars
-  function handleClearClick() {
-    // reset all the state
-    // - stop the stopwatch
-    // - set running to false
-    // - set lapse to 0
+  const renderSquare = i => (
+    <button className="square" onClick={() => handleClick(i)}>
+      {squares[i]}
+    </button>
+  )
+
+  const winner = calculateWinner(squares)
+  let status
+  if (winner) {
+    status = 'Winner: ' + winner
+  } else if (squares.every(Boolean)) {
+    status = `Scratch: Cat's game`
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O')
   }
 
-  // return (
-  //   <div>
-  //     <label>{/* Render the lapsed time with the suffix `ms` */}</label>
-  //     <button>{/* Render start or stop depending on whether it's running */}</button>
-  //     <button>Clear</button>
-  //   </div>
-  // )
-  return 'todo'
-}
-
-function Usage() {
   return (
-    <div style={{textAlign: 'center'}}>
-      <Stopwatch />
+    <div>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+      </div>
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
     </div>
   )
 }
-Usage.title = 'Stopwatch: advanced state'
+
+function Game() {
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board />
+      </div>
+    </div>
+  )
+}
+
+// Don't make changes to the Usage component. It's here to show you how your
+// component is intended to be used and is used in the tests.
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ]
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a]
+    }
+  }
+  return null
+}
+
+function Usage() {
+  return <Game />
+}
+Usage.title = 'Tic Tac Toe: Advanced State'
 
 export default Usage
