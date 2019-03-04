@@ -1,21 +1,53 @@
-// Interact with the DOM
+// More Practice with State
 import React from 'react'
-import VanillaTilt from 'vanilla-tilt'
 
-class Tilt extends React.Component {
-  rootRef = React.createRef()
-  componentDidMount() {
-    VanillaTilt.init(this.rootRef.current, {
-      max: 25,
-      speed: 400,
-      glare: true,
-      'max-glare': 0.5,
-    })
+const buttonStyles = {
+  border: '1px solid #ccc',
+  background: '#fff',
+  fontSize: '2em',
+  padding: 15,
+  margin: 5,
+  width: 200,
+}
+const labelStyles = {
+  fontSize: '5em',
+  display: 'block',
+}
+
+class StopWatch extends React.Component {
+  initialState = {lapse: 0, running: false}
+  state = this.initialState
+  handleRunClick = () => {
+    if (this.state.running) {
+      clearInterval(this.intervalId)
+    } else {
+      const startTime = Date.now() - this.state.lapse
+      this.intervalId = setInterval(() => {
+        this.setState({
+          lapse: Date.now() - startTime,
+        })
+      })
+    }
+    this.setState(state => ({running: !state.running}))
+  }
+  handleClearClick = () => {
+    clearInterval(this.intervalId)
+    this.setState(this.initialState)
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
   render() {
+    const {lapse, running} = this.state
     return (
-      <div ref={this.rootRef} className="tilt-root">
-        <div className="tilt-child">{this.props.children}</div>
+      <div>
+        <label style={labelStyles}>{lapse}ms</label>
+        <button onClick={this.handleRunClick} style={buttonStyles}>
+          {running ? 'Stop' : 'Start'}
+        </button>
+        <button onClick={this.handleClearClick} style={buttonStyles}>
+          Clear
+        </button>
       </div>
     )
   }
@@ -23,13 +55,11 @@ class Tilt extends React.Component {
 
 function Usage() {
   return (
-    <div className="totally-centered">
-      <Tilt>
-        <div className="totally-centered">vanilla-tilt.js</div>
-      </Tilt>
+    <div style={{textAlign: 'center'}}>
+      <StopWatch />
     </div>
   )
 }
-Usage.title = 'Interact with the DOM'
+Usage.title = 'More State'
 
 export default Usage

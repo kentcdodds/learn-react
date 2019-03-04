@@ -1,7 +1,15 @@
 import React from 'react'
 import {render, fireEvent} from 'react-testing-library'
-import Usage from '../exercises-final/05'
-// import Usage from '../exercises/05'
+import Usage from '../exercises-final/07'
+// import Usage from '../exercises/07'
+
+beforeAll(() => {
+  jest.spyOn(Storage.prototype, 'getItem')
+})
+
+beforeEach(() => {
+  Storage.prototype.getItem.mockClear()
+})
 
 afterEach(() => {
   window.localStorage.removeItem('count')
@@ -16,6 +24,8 @@ test('Usage works', async () => {
   expect(button).toHaveTextContent(/4/)
   fireEvent.click(button)
   expect(button).toHaveTextContent(/5/)
+  // make sure that localStorage.getItem is only called once despite multiple re-renders
+  expect(Storage.prototype.getItem).toHaveBeenCalledTimes(1)
   expect(window.localStorage.getItem('count')).toBe('5')
 })
 
@@ -26,7 +36,7 @@ test('Usage works', async () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react&e=05&em=
+http://ws.kcd.im/?ws=learn%20react&e=07&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!

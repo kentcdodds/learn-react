@@ -1,93 +1,49 @@
-// Making HTTP requests
+// Rendering Arrays
 import React from 'react'
 
-class FetchPokemon extends React.Component {
-  state = {pokemon: null, loading: false}
-  fetchPokemon = () => {
-    this.setState({loading: true})
-    fetchPokemon(this.props.pokemonName).then(
-      pokemon => this.setState({pokemon, loading: false}),
-      error => this.setState({error, loading: false}),
-    )
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+class App extends React.Component {
+  state = {items: []}
+  addItem = () => {
+    this.setState(({items}) => ({
+      items: [...items, allItems.find(i => !items.includes(i))],
+    }))
   }
-  componentDidMount() {
-    this.fetchPokemon()
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.pokemonName !== this.props.pokemonName) {
-      this.fetchPokemon()
-    }
-  }
-  render() {
-    return this.state.loading ? (
-      '...'
-    ) : this.state.error ? (
-      'ERROR (check your developer tools network tab)'
-    ) : (
-      <pre>{JSON.stringify(this.state.pokemon || 'Unknown', null, 2)}</pre>
-    )
-  }
-}
-
-function fetchPokemon(name) {
-  const pokemonQuery = `
-    query ($name: String) {
-      pokemon(name: $name) {
-        id
-        number
-        name
-        attacks {
-          special {
-            name
-            type
-            damage
-          }
-        }
-      }
-    }
-  `
-
-  return window
-    .fetch('https://graphql-pokemon.now.sh', {
-      // learn more about this API here: https://graphql-pokemon.now.sh/
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        query: pokemonQuery,
-        variables: {name},
-      }),
-    })
-    .then(r => r.json())
-    .then(response => response.data.pokemon)
-}
-
-class Usage extends React.Component {
-  state = {pokemonName: null}
-  inputRef = React.createRef()
-  handleSubmit = e => {
-    e.preventDefault()
-    this.setState({
-      pokemonName: this.inputRef.current.value,
-    })
+  removeItem = item => {
+    this.setState(({items}) => ({
+      items: items.filter(i => i !== item),
+    }))
   }
   render() {
-    const {pokemonName} = this.state
+    const {items} = this.state
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
-          <input id="pokemonName-input" ref={this.inputRef} />
-          <button type="submit">Submit</button>
-        </form>
-        <div data-testid="pokemon-display">
-          {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
-        </div>
+        <button
+          disabled={items.length >= allItems.length}
+          onClick={this.addItem}
+        >
+          +
+        </button>
+        {items.map(i => (
+          <div key={i.id}>
+            <button onClick={() => this.removeItem(i)}>-</button>
+            {i.value}:
+            <input />
+          </div>
+        ))}
       </div>
     )
   }
 }
-Usage.title = 'Making HTTP requests'
+
+function Usage() {
+  return <App />
+}
+Usage.title = 'Rendering Arrays'
 
 export default Usage

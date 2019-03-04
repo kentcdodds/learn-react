@@ -1,4 +1,4 @@
-// Component hooks and simple state
+// Counter: hooks and simple state
 import React from 'react'
 
 function Counter({step = 1, initialCount = 0}) {
@@ -10,6 +10,6 @@ function Counter({step = 1, initialCount = 0}) {
 function Usage() {
   return <Counter />
 }
-Usage.title = 'Component hooks and simple state'
+Usage.title = 'Counter: hooks and simple state'
 
 export default Usage

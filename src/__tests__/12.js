@@ -3,29 +3,39 @@ import {render, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/12'
 // import Usage from '../exercises/12'
 
-test('keeps things in sync', () => {
-  const {container} = render(<Usage />)
-  const input = container.querySelector('input')
-  const textarea = container.querySelector('textarea')
-  const select = container.querySelector('select')
-
-  let currentValue = ['apple', 'grape', 'orange']
-  fireEvent.change(input, {target: {value: currentValue.join(',')}})
-  valuesAreCorrect()
-
-  // TODO...
-  // currentValue = ['cherry', 'peach']
-  // textarea.value = currentValue.join('\n')
-  // fireEvent.change(textarea)
-  // valuesAreCorrect()
-
-  function valuesAreCorrect() {
-    expect(input.value).toBe(currentValue.join(','))
-    expect(textarea.value).toBe(currentValue.join('\n'))
-    expect(Array.from(select.selectedOptions).map(o => o.value)).toEqual(
-      currentValue,
-    )
+test('calls the onSubmitUsername handler when the submit is fired', () => {
+  const originalError = console.error
+  console.error = (...args) => {
+    // get rid of the distracting jsdom error
+    if (args[0] && args[0].includes('Not implemented')) {
+      return
+    }
+    originalError(...args)
   }
+  const handleSubmitUsername = jest.fn()
+  const {getByLabelText, getByText} = render(
+    <Usage onSubmitUsername={handleSubmitUsername} />,
+  )
+  const input = getByLabelText(/username/i)
+  const submit = getByText(/submit/i)
+
+  let value = 'a'
+  fireEvent.change(input, {target: {value}})
+  expect(submit).toHaveAttribute('disabled', '') // too short
+  expect(getByText(/at least 3 characters/i)).toBeInTheDocument()
+
+  value = 'abcd'
+  fireEvent.change(input, {target: {value}})
+  expect(submit).toHaveAttribute('disabled', '') // missing s
+  expect(getByText(/Value.*"s".*should/)).toBeInTheDocument()
+
+  value = 'Samwise'
+  fireEvent.change(input, {target: {value}})
+  fireEvent.click(submit)
+
+  expect(handleSubmitUsername).toHaveBeenCalledTimes(1)
+  expect(handleSubmitUsername).toHaveBeenCalledWith(value)
+  console.error = originalError
 })
 
 //////// Elaboration & Feedback /////////

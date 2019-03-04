@@ -1,33 +1,35 @@
-// Basic Forms
+// Interact with the DOM
 import React from 'react'
+import VanillaTilt from 'vanilla-tilt'
 
-class UsernameForm extends React.Component {
-  inputRef = React.createRef()
-  handleSubmit = event => {
-    event.preventDefault()
-    this.props.onSubmitUsername(this.inputRef.current.value)
+class Tilt extends React.Component {
+  rootRef = React.createRef()
+  componentDidMount() {
+    VanillaTilt.init(this.rootRef.current, {
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
+    })
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name-input">Username:</label>
-        <input
-          id="name-input"
-          type="text"
-          name="username"
-          ref={this.inputRef}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <div ref={this.rootRef} className="tilt-root">
+        <div className="tilt-child">{this.props.children}</div>
+      </div>
     )
   }
 }
 
-function Usage({
-  onSubmitUsername = username => console.log('username', username),
-}) {
-  return <UsernameForm onSubmitUsername={onSubmitUsername} />
+function Usage() {
+  return (
+    <div className="totally-centered">
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+    </div>
+  )
 }
-Usage.title = 'Basic Forms'
+Usage.title = 'Interact with the DOM'
 
 export default Usage

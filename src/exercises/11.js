@@ -1,40 +1,41 @@
-// Dynamic Forms
+// Basic Forms
 import React from 'react'
 
-// if we want our form to be dynamic, we'll need a few things:
-// 1. Component state to store the dynamic values (an error message in our case)
-// 2. A change handler on the input so we know what the value is as the user changes it
+// In React, there actually aren't a ton of things you have to learn
+// to interact with forms beyond what you can do with regular DOM
+// APIs and JavaScript.
 //
-// In our usage example below, we provide a prop called `getErrorMessage`.
-// This serves as our simple validation. If it returns a string, that's an error
-// message we should display below the input. We'll store this value in state
-// and use that to know whether to render the message as well as whether to
-// disable the submit button.
+// You can attach a submit handler to a form element with the `onSubmit`
+// prop. This will be called with the submit event which has a `target`.
+// That `target` will reference the `<form>` which has a reference to
+// the elements of the form which can be used to get the values out of
+// the form.
 
 class UsernameForm extends React.Component {
-  // 🐨 add some state to this form for the error.
-  // 💰 initialize it with an error property that's assigned to `this.props.getErrorMessage('')`
-  inputRef = React.createRef()
-  handleSubmit = event => {
-    event.preventDefault()
-    this.props.onSubmitUsername(this.inputRef.current.value)
-  }
-  // 🐨 create a bound `handleChange` function that takes the
-  // value of the input and updates the `error` state to
-  // whatever is returned from `this.props.getErrorMessage`
+  // 🐨 add a submit event handler here (`handleSubmit`).
+  // Make sure to accept the `event` as an argument and call
+  // `event.preventDefault()` to prevent the default behavior
+  // of form submit events (which refreshes the page).
+  //
+  // There are several ways to get the value of the name input:
+  //
+  // Via their index:
+  // event.target.elements[0]
+  //
+  // Via the elements object by their name:
+  // event.target.elements.username.value
+  //
+  // Or you could create a React ref and get the input that way.
+  //
+  // 🐨 get the value from the username input (using whichever method
+  // you prefer from the above options), and call `this.props.onSubmitUsername`
+  // with the value of the input.
   render() {
+    // add the `onSubmit` handler prop to the form
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         <label htmlFor="name-input">Username:</label>
-        <input
-          id="name-input"
-          type="text"
-          name="username"
-          ref={this.inputRef}
-          // 🐨 add your onChange handler here
-        />
-        {/* 🐨 if there's an error, then render it in a div here */}
-        {/* 🐨 add a disabled prop to this button that's set to true if there's an error */}
+        <input id="name-input" type="text" name="username" />
         <button type="submit">Submit</button>
       </form>
     )
@@ -47,23 +48,8 @@ class UsernameForm extends React.Component {
 function Usage({
   onSubmitUsername = username => console.log('username', username),
 }) {
-  return (
-    <UsernameForm
-      onSubmitUsername={onSubmitUsername}
-      getErrorMessage={value => {
-        if (value.length < 3) {
-          return `Value must be at least 3 characters, but is only ${
-            value.length
-          }`
-        }
-        if (!value.includes('s')) {
-          return `Value does not include "s" but it should!`
-        }
-        return null
-      }}
-    />
-  )
+  return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
-Usage.title = 'Dynamic Forms'
+Usage.title = 'Basic Forms'
 
 export default Usage

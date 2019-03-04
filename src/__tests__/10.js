@@ -1,30 +1,11 @@
 import React from 'react'
-import {render, fireEvent} from '../../test/utils'
+import {render} from '../../test/utils'
 import Usage from '../exercises-final/10'
 // import Usage from '../exercises/10'
 
-test('calls the onSubmitUsername handler when the submit is fired', () => {
-  const originalError = console.error
-  console.error = (...args) => {
-    // get rid of the distracting jsdom error
-    if (args[0] && args[0].includes('Not implemented')) {
-      return
-    }
-    originalError(...args)
-  }
-  const handleSubmitUsername = jest.fn()
-  const {getByLabelText, getByText} = render(
-    <Usage onSubmitUsername={handleSubmitUsername} />,
-  )
-  const input = getByLabelText(/username/i)
-  const submit = getByText(/submit/i)
-
-  input.value = 'Jenny'
-  fireEvent.click(submit)
-
-  expect(handleSubmitUsername).toHaveBeenCalledTimes(1)
-  expect(handleSubmitUsername).toHaveBeenCalledWith(input.value)
-  console.error = originalError
+test('calls VanillaTilt.init with the root node', () => {
+  const {container} = render(<Usage />)
+  expect(container.querySelector('.tilt-root')).toHaveProperty('vanillaTilt')
 })
 
 //////// Elaboration & Feedback /////////

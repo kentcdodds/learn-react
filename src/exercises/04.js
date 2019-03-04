@@ -1,4 +1,4 @@
-// Component hooks and simple state
+// Counter: hooks and simple state
 import React from 'react'
 
 // Normally an interactive application will need to hold state somewhere.
@@ -95,6 +95,6 @@ function Counter() {
 function Usage() {
   return <Counter />
 }
-Usage.title = 'Component hooks and simple state'
+Usage.title = 'Counter: hooks and simple state'
 
 export default Usage

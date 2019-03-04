@@ -1,99 +1,50 @@
-// Making HTTP requests
+// Rendering Arrays
 import React from 'react'
 
-// In this exercise we have a form where users can enter the name of a pokemon
-// and fetch data about that pokemon. Your job will be to create a component
-// which makes that fetch request.
-//
-// 🐨 Have state for the pokemon and the loading state
-// 🐨 Use the `fetchPokemon` function below to fetch a pokemon by its name:
-//   fetchPokemon('Pikachu').then(
-//     pokemon => { /* call set state with the pokemon and loading: false */},
-//     error => {/* call set state with the error loading: false */},
-//   )
-// 🐨 You should fetch the pokemon in componentDidMount and componentDidUpdate
-//    (but only if the props changed: `componentDidMount(prevProps)`)
-// 🐨 Before you fetch the pokemon, call `this.setState({loading: true})` to
-//   initialize the loading state (ask me later how this will be different in
-//   the future with React "suspense")
-// 🐨 Render the appropriate content based on the state:
-//    1. loading: '...'
-//    2. error: 'ERROR!'
-//    3. pokemon: the JSON.stringified pokemon in a <pre></pre>
-
-class FetchPokemon extends React.Component {
-  render() {
-    return 'todo...'
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+class App extends React.Component {
+  state = {items: []}
+  addItem = () => {
+    this.setState(({items}) => ({
+      items: [...items, allItems.find(i => !items.includes(i))],
+    }))
   }
-}
-
-/////////////////////////////////////////////////
-//
-// You should not need to change anything below this line
-//
-/////////////////////////////////////////////////
-
-function fetchPokemon(name) {
-  const pokemonQuery = `
-    query ($name: String) {
-      pokemon(name: $name) {
-        id
-        number
-        name
-        attacks {
-          special {
-            name
-            type
-            damage
-          }
-        }
-      }
-    }
-  `
-
-  return window
-    .fetch('https://graphql-pokemon.now.sh', {
-      // learn more about this API here: https://graphql-pokemon.now.sh/
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        query: pokemonQuery,
-        variables: {name},
-      }),
-    })
-    .then(r => r.json())
-    .then(response => response.data.pokemon)
-}
-
-class Usage extends React.Component {
-  state = {pokemonName: null}
-  inputRef = React.createRef()
-  handleSubmit = e => {
-    e.preventDefault()
-    this.setState({
-      pokemonName: this.inputRef.current.value,
-    })
+  removeItem = item => {
+    this.setState(({items}) => ({
+      items: items.filter(i => i !== item),
+    }))
   }
   render() {
-    const {pokemonName} = this.state
+    const {items} = this.state
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
-          <input id="pokemonName-input" ref={this.inputRef} />
-          <button type="submit">Submit</button>
-        </form>
-        <div data-testid="pokemon-display">
-          {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
-        </div>
+        <button
+          disabled={items.length >= allItems.length}
+          onClick={this.addItem}
+        >
+          +
+        </button>
+        {items.map(i => (
+          // 🐨 this div needs a key. Set it to i.id
+          <div>
+            <button onClick={() => this.removeItem(i)}>-</button>
+            {i.value}:
+            <input />
+          </div>
+        ))}
       </div>
     )
   }
 }
-Usage.title = 'Making HTTP requests'
+
+function Usage() {
+  return <App />
+}
+Usage.title = 'Rendering Arrays'
 
 export default Usage
-
-/* eslint no-unused-vars:0 */

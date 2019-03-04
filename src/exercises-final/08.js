@@ -1,65 +1,45 @@
-// More Practice with State
+// Counter: advanced custom hooks
 import React from 'react'
 
-const buttonStyles = {
-  border: '1px solid #ccc',
-  background: '#fff',
-  fontSize: '2em',
-  padding: 15,
-  margin: 5,
-  width: 200,
-}
-const labelStyles = {
-  fontSize: '5em',
-  display: 'block',
+function useLocalStorageState({
+  key,
+  initialValue,
+  serialize = v => v,
+  deserialize = v => v,
+}) {
+  const [state, setState] = React.useState(() =>
+    deserialize(window.localStorage.getItem(key) || initialValue),
+  )
+  React.useEffect(() => {
+    window.localStorage.setItem(key, serialize(state))
+  }, [serialize(state)])
+  return [state, setState]
 }
 
-class StopWatch extends React.Component {
-  initialState = {lapse: 0, running: false}
-  state = this.initialState
-  handleRunClick = () => {
-    if (this.state.running) {
-      clearInterval(this.intervalId)
-    } else {
-      const startTime = Date.now() - this.state.lapse
-      this.intervalId = setInterval(() => {
-        this.setState({
-          lapse: Date.now() - startTime,
-        })
-      })
-    }
-    this.setState(state => ({running: !state.running}))
-  }
-  handleClearClick = () => {
-    clearInterval(this.intervalId)
-    this.setState(this.initialState)
-  }
-  componentWillUnmount() {
-    clearInterval(this.intervalId)
-  }
-  render() {
-    const {lapse, running} = this.state
-    return (
-      <div>
-        <label style={labelStyles}>{lapse}ms</label>
-        <button onClick={this.handleRunClick} style={buttonStyles}>
-          {running ? 'Stop' : 'Start'}
-        </button>
-        <button onClick={this.handleClearClick} style={buttonStyles}>
-          Clear
-        </button>
-      </div>
-    )
-  }
+function useLocalStorageCount({step = 1, initialCount = 0, key = 'count'}) {
+  const [count, setCount] = useLocalStorageState({
+    key,
+    initialValue: initialCount,
+    deserialize: v => Number(v),
+  })
+  const increment = () => setCount(c => c + step)
+  return [count, increment]
 }
+
+function Counter({step, initialCount}) {
+  const [count, increment] = useLocalStorageCount({
+    step,
+    initialCount,
+  })
+  return <button onClick={increment}>{count}</button>
+}
+
+// Don't make changes to the Usage component. It's here to show you how your
+// component is intended to be used and is used in the tests.
 
 function Usage() {
-  return (
-    <div style={{textAlign: 'center'}}>
-      <StopWatch />
-    </div>
-  )
+  return <Counter />
 }
-Usage.title = 'More State'
+Usage.title = 'Counter: advanced custom hooks'
 
 export default Usage
