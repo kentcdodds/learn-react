@@ -1,4 +1,4 @@
-// More Practice with State
+// Stopwatch: Advanced State
 import React from 'react'
 
 const buttonStyles = {
@@ -14,52 +14,74 @@ const labelStyles = {
   display: 'block',
 }
 
-class StopWatch extends React.Component {
-  initialState = {lapse: 0, running: false}
-  state = this.initialState
-  handleRunClick = () => {
-    if (this.state.running) {
-      clearInterval(this.intervalId)
-    } else {
-      const startTime = Date.now() - this.state.lapse
-      this.intervalId = setInterval(() => {
-        this.setState({
-          lapse: Date.now() - startTime,
-        })
-      })
+function stopwatchReducer(state, action) {
+  switch (action.type) {
+    case 'TOGGLE_RUNNING': {
+      return {...state, running: !state.running}
     }
-    this.setState(state => ({running: !state.running}))
+    case 'INCREMENT_LAPSE': {
+      if (state.running) {
+        return {
+          ...state,
+          lapse: action.now - action.startTime,
+        }
+      } else {
+        return state
+      }
+    }
+    case 'CLEAR': {
+      return {lapse: 0, running: false}
+    }
+    default: {
+      throw new Error(`Unsupported type ${action.type}`)
+    }
   }
-  handleClearClick = () => {
-    clearInterval(this.intervalId)
-    this.setState(this.initialState)
+}
+
+function Stopwatch() {
+  const [{lapse, running}, dispatch] = React.useReducer(stopwatchReducer, {
+    lapse: 0,
+    running: false,
+  })
+
+  React.useEffect(() => {
+    if (running) {
+      const startTime = Date.now() - lapse
+      const rafId = requestAnimationFrame(() => {
+        dispatch({type: 'INCREMENT_LAPSE', now: Date.now(), startTime})
+      })
+      return () => cancelAnimationFrame(rafId)
+    }
+  }, [running, lapse])
+
+  function handleRunClick() {
+    dispatch({type: 'TOGGLE_RUNNING'})
   }
-  componentWillUnmount() {
-    clearInterval(this.intervalId)
+
+  function handleClearClick() {
+    dispatch({type: 'CLEAR'})
   }
-  render() {
-    const {lapse, running} = this.state
-    return (
-      <div>
-        <label style={labelStyles}>{lapse}ms</label>
-        <button onClick={this.handleRunClick} style={buttonStyles}>
-          {running ? 'Stop' : 'Start'}
-        </button>
-        <button onClick={this.handleClearClick} style={buttonStyles}>
-          Clear
-        </button>
-      </div>
-    )
-  }
+
+  return (
+    <div>
+      <label style={labelStyles}>{lapse}ms</label>
+      <button onClick={handleRunClick} style={buttonStyles}>
+        {running ? 'Stop' : 'Start'}
+      </button>
+      <button onClick={handleClearClick} style={buttonStyles}>
+        Clear
+      </button>
+    </div>
+  )
 }
 
 function Usage() {
   return (
     <div style={{textAlign: 'center'}}>
-      <StopWatch />
+      <Stopwatch />
     </div>
   )
 }
-Usage.title = 'More State'
+Usage.title = 'Stopwatch: advanced state'
 
 export default Usage

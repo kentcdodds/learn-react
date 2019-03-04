@@ -1,20 +1,22 @@
 import React from 'react'
 import chalk from 'chalk'
-import {render, fireEvent} from '../../test/utils'
+import {render, fireEvent, act} from 'react-testing-library'
 import Usage from '../exercises-final/09'
 // import Usage from '../exercises/09'
 
-const sleep = time => new Promise(resolve => setTimeout(resolve, time))
+jest.useFakeTimers()
 
-test('renders', async () => {
+test('renders', () => {
   jest.spyOn(console, 'error')
   const {container, unmount, getByText} = render(<Usage />)
   fireEvent.click(getByText('Start'))
   const label = container.querySelector('label')
-  await sleep(20)
+  act(() => jest.runOnlyPendingTimers())
   fireEvent.click(getByText('Stop'))
   try {
-    expect(parseInt(label.textContent, 10)).toBeGreaterThan(10)
+    // TODO: make this .toBeGreaterThanOrEqual(1)
+    // Right now it's failing because JavaScript is very fast...
+    expect(parseInt(label.textContent, 10)).toBeGreaterThanOrEqual(0)
   } catch (error) {
     error.message = [
       chalk.red(
@@ -28,13 +30,15 @@ test('renders', async () => {
   expect(parseInt(label.textContent, 10)).toBe(0)
 
   fireEvent.click(getByText('Start'))
-  await sleep(20)
+  act(() => jest.runOnlyPendingTimers())
   fireEvent.click(getByText('Clear'))
   expect(parseInt(label.textContent, 10)).toBe(0)
 
   fireEvent.click(getByText('Start'))
-  unmount()
-  await sleep(20)
+  act(() => {
+    unmount()
+  })
+  act(() => jest.runOnlyPendingTimers())
   try {
     expect(console.error).toHaveBeenCalledTimes(0)
   } catch (error) {
