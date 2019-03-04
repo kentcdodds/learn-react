@@ -17,9 +17,9 @@
 
 ## System Requirements
 
-* [git][git] v2.14.1 or greater
-* [NodeJS][node] v8.9.4 or greater
-* [npm][npm] v5.6.0 or greater
+- [git][git] v2.14.1 or greater
+- [NodeJS][node] v8.9.4 or greater
+- [npm][npm] v5.6.0 or greater
 
 All of these must be available in your `PATH`. To verify things are set up
 properly, you can run this:
@@ -48,8 +48,12 @@ follow the following instructions.
 After you've made sure to have the correct things (and versions) installed, you
 should be able to just run a few commands to get set up:
 
+> NOTE: `<branchname>` refers to the specific branch you want to clone. If
+> replace that with the branch you were given in the instructions or `master`
+> if you were not given any specific instructions.
+
 ```
-git clone https://github.com/kentcdodds/learn-react.git
+git clone --single-branch --branch <branchname> https://github.com/kentcdodds/learn-react.git
 cd learn-react
 npm run setup --silent
 ```
@@ -140,6 +144,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore -->
 | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Tests") | [<img src="https://avatars3.githubusercontent.com/u/8210763?v=4" width="100px;"/><br /><sub><b>Nathan Hannig</b></sub>](https://nathanhannig.com)<br />[🐛](https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig "Bug reports") [💻](https://github.com/kentcdodds/learn-react/commits?author=nathanhannig "Code") |
 | :---: | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
