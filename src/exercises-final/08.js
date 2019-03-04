@@ -7,8 +7,8 @@ function useLocalStorageState({
   serialize = v => v,
   deserialize = v => v,
 }) {
-  const [state, setState] = React.useState(() =>
-    deserialize(window.localStorage.getItem(key) || initialValue),
+  const [state, setState] = React.useState(
+    () => deserialize(window.localStorage.getItem(key)) || initialValue,
   )
   React.useEffect(() => {
     window.localStorage.setItem(key, serialize(state))
@@ -16,7 +16,7 @@ function useLocalStorageState({
   return [state, setState]
 }
 
-function useLocalStorageCount({step = 1, initialCount = 0, key = 'count'}) {
+function useLocalStorageCounter({step = 1, initialCount = 0, key = 'count'}) {
   const [count, setCount] = useLocalStorageState({
     key,
     initialValue: initialCount,
@@ -27,7 +27,7 @@ function useLocalStorageCount({step = 1, initialCount = 0, key = 'count'}) {
 }
 
 function Counter({step, initialCount}) {
-  const [count, increment] = useLocalStorageCount({
+  const [count, increment] = useLocalStorageCounter({
     step,
     initialCount,
   })

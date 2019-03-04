@@ -7,7 +7,7 @@ afterEach(() => {
   window.localStorage.removeItem('count')
 })
 
-test('Usage works', async () => {
+test('Usage works', () => {
   window.localStorage.setItem('count', 3)
   const {container} = render(<Usage />)
   const button = container.getElementsByTagName('button')[0]
