@@ -34,7 +34,7 @@ function Game() {
   const [stepNumber, setStepNumber] = React.useState(0)
   const xIsNext = stepNumber % 2 === 0
 
-  function handleClick(square) {
+  function selectSquare(square) {
     const newHistory = history.slice(0, stepNumber + 1)
     const current = newHistory[newHistory.length - 1]
     const squares = [...current.squares]
@@ -71,7 +71,7 @@ function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board onClick={handleClick} squares={current.squares} />
+        <Board onClick={selectSquare} squares={current.squares} />
       </div>
       <div className="game-info">
         <div>{status}</div>

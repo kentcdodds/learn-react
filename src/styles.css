@@ -84,9 +84,6 @@ https://micku7zu.github.io/vanilla-tilt.js/index.html
 
 .square:focus {
   outline: none;
-}
-
-.kbd-navigation .square:focus {
   background: #ddd;
 }
 

@@ -5,7 +5,7 @@ function Board() {
   const [squares, setSquares] = React.useState(Array(9).fill(null))
   const [xIsNext, setXIsNext] = React.useState(true)
 
-  function handleClick(square) {
+  function selectSquare(square) {
     if (calculateWinner(squares) || squares[square]) {
       return
     }
@@ -16,7 +16,7 @@ function Board() {
   }
 
   const renderSquare = i => (
-    <button className="square" onClick={() => handleClick(i)}>
+    <button className="square" onClick={() => selectSquare(i)}>
       {squares[i]}
     </button>
   )
@@ -24,11 +24,11 @@ function Board() {
   const winner = calculateWinner(squares)
   let status
   if (winner) {
-    status = 'Winner: ' + winner
+    status = `Winner: ${winner}`
   } else if (squares.every(Boolean)) {
     status = `Scratch: Cat's game`
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O')
+    status = `Next player: ${xIsNext ? 'X' : 'O'}`
   }
 
   return (
