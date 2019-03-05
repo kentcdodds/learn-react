@@ -1,7 +1,6 @@
 import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
-import loadable from 'react-loadable'
 
 const files = [
   '01',
@@ -213,16 +212,13 @@ function FullPage({type, match}) {
 }
 
 class Isolated extends React.Component {
-  Component = loadable({
-    loader: () => {
-      const {moduleName} = this.props.match.params
-      return this.props.type === 'exercise'
-        ? import(`./exercises/${moduleName}`)
-        : this.props.type === 'final'
-        ? import(`./exercises-final/${moduleName}`)
-        : null
-    },
-    loading: () => <div>Loading...</div>,
+  Component = React.lazy(() => {
+    const {moduleName} = this.props.match.params
+    return this.props.type === 'exercise'
+      ? import(`./exercises/${moduleName}`)
+      : this.props.type === 'final'
+      ? import(`./exercises-final/${moduleName}`)
+      : null
   })
   render() {
     return (
@@ -268,56 +264,58 @@ function Home() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact={true} component={Home} />
-        <Route
-          path={`/:exerciseId`}
-          exact={true}
-          component={ExerciseContainer}
-        />
-        <Route
-          path={`/:exerciseId/exercise`}
-          render={props => <FullPage {...props} type="exercise" />}
-          exact={true}
-        />
-        <Route
-          path={`/:exerciseId/final`}
-          render={props => <FullPage {...props} type="final" />}
-          exact={true}
-        />
-        <Route
-          path={`/isolated/exercises/:moduleName`}
-          exact={true}
-          render={props => <Isolated {...props} type="exercise" />}
-        />
-        <Route
-          path={`/isolated/exercises-final/:moduleName`}
-          exact={true}
-          render={props => <Isolated {...props} type="final" />}
-        />
-        <Route
-          render={() => (
-            <div
-              style={{
-                height: '100%',
-                display: 'grid',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <div>
-                Sorry... nothing here. To open one of the exercises, go to{' '}
-                <code>{`/exerciseId`}</code>, for example:{' '}
-                <Link to="/01">
-                  <code>{`/01`}</code>
-                </Link>
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact={true} component={Home} />
+          <Route
+            path={`/:exerciseId`}
+            exact={true}
+            component={ExerciseContainer}
+          />
+          <Route
+            path={`/:exerciseId/exercise`}
+            render={props => <FullPage {...props} type="exercise" />}
+            exact={true}
+          />
+          <Route
+            path={`/:exerciseId/final`}
+            render={props => <FullPage {...props} type="final" />}
+            exact={true}
+          />
+          <Route
+            path={`/isolated/exercises/:moduleName`}
+            exact={true}
+            render={props => <Isolated {...props} type="exercise" />}
+          />
+          <Route
+            path={`/isolated/exercises-final/:moduleName`}
+            exact={true}
+            render={props => <Isolated {...props} type="final" />}
+          />
+          <Route
+            render={() => (
+              <div
+                style={{
+                  height: '100%',
+                  display: 'grid',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <div>
+                  Sorry... nothing here. To open one of the exercises, go to{' '}
+                  <code>{`/exerciseId`}</code>, for example:{' '}
+                  <Link to="/01">
+                    <code>{`/01`}</code>
+                  </Link>
+                </div>
               </div>
-            </div>
-          )}
-        />
-      </Switch>
-    </BrowserRouter>
+            )}
+          />
+        </Switch>
+      </BrowserRouter>
+    </React.Suspense>
   )
 }
 
