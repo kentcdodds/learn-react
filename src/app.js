@@ -242,7 +242,7 @@ class Isolated extends React.Component {
 function Home() {
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Advanced React Component Patterns</h1>
+      <h1 style={{textAlign: 'center'}}>Learn React</h1>
       <div>
         {filesAndTitles.map(({title, filename}) => {
           return (
