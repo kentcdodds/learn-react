@@ -32,11 +32,10 @@ function App() {
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the code above.
-function Usage({
-  onButtonClick = () => console.log('you clicked the button!'),
-  onInputChange = event =>
-    console.log('the input value is: ', event.target.value),
-}) {
+function Usage() {
+  const onButtonClick = () => console.log('you clicked the button!')
+  const onInputChange = event =>
+    console.log('the input value is: ', event.target.value)
   return <App onButtonClick={onButtonClick} onInputChange={onInputChange} />
 }
 Usage.title = 'Event handlers'

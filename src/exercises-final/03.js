@@ -10,11 +10,10 @@ function App({onButtonClick, onInputChange}) {
   )
 }
 
-function Usage({
-  onButtonClick = () => console.log('you clicked the button!'),
-  onInputChange = event =>
-    console.log('the input value is: ', event.target.value),
-}) {
+function Usage() {
+  const onButtonClick = () => console.log('you clicked the button!')
+  const onInputChange = event =>
+    console.log('the input value is: ', event.target.value)
   return <App onButtonClick={onButtonClick} onInputChange={onInputChange} />
 }
 Usage.title = 'Event handlers'
