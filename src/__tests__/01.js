@@ -6,7 +6,6 @@ import Usage from '../exercises-final/01'
 test('logs errors to the console', () => {
   jest.spyOn(console, 'error').mockImplementation(() => {})
   render(<Usage />)
-  expect(console.error).toHaveBeenCalledTimes(2)
   expect(console.error).toHaveBeenCalledWith(
     expect.stringContaining(
       'Warning: Failed prop type: Invalid prop `firstName` of type `boolean` supplied to `SayHello`, expected `string`.',
@@ -17,6 +16,7 @@ test('logs errors to the console', () => {
       'Warning: Failed prop type: The prop `lastName` is marked as required in `SayHello`, but its value is `undefined`.',
     ),
   )
+  expect(console.error).toHaveBeenCalledTimes(2)
   console.error.mockRestore()
 })
 
