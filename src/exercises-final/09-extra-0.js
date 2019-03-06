@@ -52,18 +52,18 @@ function Game() {
   const winner = calculateWinner(current.squares)
   let status
   if (winner) {
-    status = 'Winner: ' + winner
+    status = `Winner: ${winner}`
   } else if (current.squares.every(Boolean)) {
     status = `Scratch: Cat's game`
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O')
+    status = `Next player: ${xIsNext ? 'X' : 'O'}`
   }
 
-  const moves = history.map((step, move) => {
-    const desc = move ? 'Go to move #' + move : 'Go to game start'
+  const moves = history.map((step, stepNumber) => {
+    const desc = stepNumber ? `Go to move #${stepNumber}` : 'Go to game start'
     return (
-      <li key={move}>
-        <button onClick={() => setStepNumber(move)}>{desc}</button>
+      <li key={stepNumber}>
+        <button onClick={() => setStepNumber(stepNumber)}>{desc}</button>
       </li>
     )
   })

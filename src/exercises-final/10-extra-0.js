@@ -29,29 +29,21 @@ function Board({squares, onClick}) {
   )
 }
 
-function gameReducer(state, action) {
-  const {history, stepNumber} = state
+function historyReducer(state, action) {
+  const {history, entryNumber} = state
   switch (action.type) {
-    case 'SELECT_SQUARE': {
-      const xIsNext = stepNumber % 2 === 0
-      const newHistory = history.slice(0, stepNumber + 1)
-      const current = newHistory[newHistory.length - 1]
-      const squares = [...current.squares]
-
-      if (calculateWinner(squares) || squares[action.square]) {
-        return state
-      }
-
-      squares[action.square] = xIsNext ? 'X' : 'O'
+    case 'ADD_ENTRY': {
+      const newHistory = history.slice(0, entryNumber + 1)
+      newHistory[newHistory.length] = action.newEntry
       return {
-        history: [...newHistory, {squares}],
-        stepNumber: newHistory.length,
+        history: newHistory,
+        entryNumber: newHistory.length - 1,
       }
     }
-    case 'GO_TO_STEP': {
+    case 'GO_TO_ENTRY': {
       return {
         ...state,
-        stepNumber: action.stepNumber,
+        entryNumber: action.entryNumber,
       }
     }
     default:
@@ -59,36 +51,57 @@ function gameReducer(state, action) {
   }
 }
 
-function Game() {
-  const [state, dispatch] = React.useReducer(gameReducer, {
-    history: [{squares: Array(9).fill(null)}],
-    stepNumber: 0,
+function useHistory(initialHistory = [], initialEntryNumber = 0) {
+  const [state, dispatch] = React.useReducer(historyReducer, {
+    history: initialHistory,
+    entryNumber: initialEntryNumber,
   })
-  const {history, stepNumber} = state
-  const xIsNext = stepNumber % 2 === 0
+  const {history, entryNumber} = state
+  const current = history[entryNumber]
+  const goToEntry = newEntryNumber =>
+    dispatch({type: 'GO_TO_ENTRY', entryNumber: newEntryNumber})
+  const addEntry = newEntry => dispatch({type: 'ADD_ENTRY', newEntry})
+  return {history, entryNumber, current, goToEntry, addEntry}
+}
+
+function useGame() {
+  const {history, entryNumber, current, goToEntry, addEntry} = useHistory([
+    {squares: Array(9).fill(null)},
+  ])
+  const xIsNext = entryNumber % 2 === 0
+  const {squares} = current
 
   function selectSquare(square) {
-    dispatch({type: 'SELECT_SQUARE', square})
+    if (calculateWinner(squares) || squares[square]) {
+      return
+    }
+    const newSquares = [...squares]
+    newSquares[square] = xIsNext ? 'X' : 'O'
+
+    addEntry({squares: newSquares})
   }
 
-  const current = history[stepNumber]
-  const winner = calculateWinner(current.squares)
+  const winner = calculateWinner(squares)
   let status
   if (winner) {
     status = `Winner: ${winner}`
-  } else if (current.squares.every(Boolean)) {
+  } else if (squares.every(Boolean)) {
     status = `Scratch: Cat's game`
   } else {
     status = `Next player: ${xIsNext ? 'X' : 'O'}`
   }
 
+  return {history, squares, selectSquare, goToStep: goToEntry, status}
+}
+
+function Game() {
+  const {history, squares, selectSquare, goToStep, status} = useGame()
+
   const moves = history.map((step, stepNumber) => {
     const desc = stepNumber ? `Go to move #${stepNumber}` : 'Go to game start'
     return (
       <li key={stepNumber}>
-        <button onClick={() => dispatch({type: 'GO_TO_STEP', stepNumber})}>
-          {desc}
-        </button>
+        <button onClick={() => goToStep(stepNumber)}>{desc}</button>
       </li>
     )
   })
@@ -96,7 +109,7 @@ function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board onClick={selectSquare} squares={current.squares} />
+        <Board onClick={selectSquare} squares={squares} />
       </div>
       <div className="game-info">
         <div>{status}</div>
