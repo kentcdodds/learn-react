@@ -11,7 +11,7 @@ import React from 'react'
 // counter example component:
 //
 // function counterReducer(state, action) {
-//   switch (action.key) {
+//   switch (action.type) {
 //     case 'INCREMENT': {
 //       return {count: state.count + 1}
 //     }
