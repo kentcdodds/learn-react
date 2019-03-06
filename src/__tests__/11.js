@@ -1,30 +1,26 @@
 import React from 'react'
-import {render, fireEvent} from '../../test/utils'
+import {render, fireEvent} from 'react-testing-library'
 import Usage from '../exercises-final/11'
 // import Usage from '../exercises/11'
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {})
+})
+
+beforeEach(() => {
+  console.log.mockClear()
+})
+
 test('calls the onSubmitUsername handler when the submit is fired', () => {
-  const originalError = console.error
-  console.error = (...args) => {
-    // get rid of the distracting jsdom error
-    if (args[0] && args[0].includes('Not implemented')) {
-      return
-    }
-    originalError(...args)
-  }
-  const handleSubmitUsername = jest.fn()
-  const {getByLabelText, getByText} = render(
-    <Usage onSubmitUsername={handleSubmitUsername} />,
-  )
+  const {getByLabelText, getByText} = render(<Usage />)
   const input = getByLabelText(/username/i)
   const submit = getByText(/submit/i)
 
-  input.value = 'Jenny'
+  fireEvent.change(input, {target: {value: 'Jenny'}})
   fireEvent.click(submit)
 
-  expect(handleSubmitUsername).toHaveBeenCalledTimes(1)
-  expect(handleSubmitUsername).toHaveBeenCalledWith(input.value)
-  console.error = originalError
+  expect(console.log).toHaveBeenCalledWith('username', input.value)
+  expect(console.log).toHaveBeenCalledTimes(1)
 })
 
 //////// Elaboration & Feedback /////////

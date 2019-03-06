@@ -1,31 +1,24 @@
 // Basic Forms
 import React from 'react'
 
-class UsernameForm extends React.Component {
-  inputRef = React.createRef()
-  handleSubmit = event => {
+function UsernameForm({onSubmitUsername}) {
+  const inputRef = React.createRef()
+  function handleSubmit(event) {
     event.preventDefault()
-    this.props.onSubmitUsername(this.inputRef.current.value)
+    onSubmitUsername(inputRef.current.value)
   }
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name-input">Username:</label>
-        <input
-          id="name-input"
-          type="text"
-          name="username"
-          ref={this.inputRef}
-        />
-        <button type="submit">Submit</button>
-      </form>
-    )
-  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="name-input">Username:</label>
+      <input id="name-input" type="text" name="username" ref={inputRef} />
+      <button type="submit">Submit</button>
+    </form>
+  )
 }
 
-function Usage({
-  onSubmitUsername = username => console.log('username', username),
-}) {
+function Usage() {
+  const onSubmitUsername = username => console.log('username', username)
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 Usage.title = 'Basic Forms'

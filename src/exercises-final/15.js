@@ -1,32 +1,56 @@
 // Making HTTP requests
 import React from 'react'
 
-class FetchPokemon extends React.Component {
-  state = {pokemon: null, loading: false}
-  fetchPokemon = () => {
-    this.setState({loading: true})
-    fetchPokemon(this.props.pokemonName).then(
-      pokemon => this.setState({pokemon, loading: false}),
-      error => this.setState({error, loading: false}),
-    )
-  }
-  componentDidMount() {
-    this.fetchPokemon()
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.pokemonName !== this.props.pokemonName) {
-      this.fetchPokemon()
+function fetchPokemonReducer(state, action) {
+  switch (action.type) {
+    case 'FETCHING': {
+      return {
+        ...state,
+        loading: true,
+      }
     }
+    case 'FETCHED': {
+      return {
+        error: null,
+        loading: false,
+        pokemon: action.pokemon,
+      }
+    }
+    case 'FETCH_ERROR': {
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
+      }
+    }
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`)
   }
-  render() {
-    return this.state.loading ? (
-      '...'
-    ) : this.state.error ? (
-      'ERROR (check your developer tools network tab)'
-    ) : (
-      <pre>{JSON.stringify(this.state.pokemon || 'Unknown', null, 2)}</pre>
+}
+
+function FetchPokemon({pokemonName}) {
+  const [state, dispatch] = React.useReducer(fetchPokemonReducer, {
+    pokemon: null,
+    loading: false,
+    error: null,
+  })
+  const {pokemon, loading, error} = state
+
+  React.useEffect(() => {
+    dispatch({type: 'FETCHING'})
+    fetchPokemon(pokemonName).then(
+      pokemon => dispatch({type: 'FETCHED', pokemon}),
+      error => dispatch({type: 'FETCH_ERROR', error}),
     )
-  }
+  }, [pokemonName])
+
+  return loading ? (
+    '...'
+  ) : error ? (
+    'ERROR (check your developer tools network tab)'
+  ) : (
+    <pre>{JSON.stringify(pokemon || 'Unknown', null, 2)}</pre>
+  )
 }
 
 function fetchPokemon(name) {

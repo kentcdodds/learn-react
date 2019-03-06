@@ -7,43 +7,37 @@ const allItems = [
   {id: 'g', value: 'grape'},
   {id: 'p', value: 'pear'},
 ]
-class App extends React.Component {
-  state = {items: []}
-  addItem = () => {
-    this.setState(({items}) => ({
-      items: [...items, allItems.find(i => !items.includes(i))],
-    }))
+
+function App() {
+  const [items, setItems] = React.useState([])
+
+  function addItem() {
+    setItems([...items, allItems.find(i => !items.includes(i))])
   }
-  removeItem = item => {
-    this.setState(({items}) => ({
-      items: items.filter(i => i !== item),
-    }))
+
+  function removeItem(item) {
+    setItems(items.filter(i => i !== item))
   }
-  render() {
-    const {items} = this.state
-    return (
-      <div>
-        <button
-          disabled={items.length >= allItems.length}
-          onClick={this.addItem}
-        >
-          +
-        </button>
-        {items.map(i => (
-          <div key={i.id}>
-            <button onClick={() => this.removeItem(i)}>-</button>
-            {i.value}:
-            <input />
-          </div>
-        ))}
-      </div>
-    )
-  }
+
+  return (
+    <div>
+      <button disabled={items.length >= allItems.length} onClick={addItem}>
+        +
+      </button>
+      {items.map(i => (
+        <div key={i.id}>
+          <button onClick={() => removeItem(i)}>-</button>
+          {i.value}:
+          <input defaultValue={i.value} />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 function Usage() {
   return <App />
 }
-Usage.title = 'Rendering Arrays'
+Usage.title = 'Rendering Arrays: the key prop'
 
 export default Usage

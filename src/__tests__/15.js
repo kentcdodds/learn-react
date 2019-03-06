@@ -1,10 +1,13 @@
 import React from 'react'
 import chalk from 'chalk'
-import {render, wait} from '../../test/utils'
+import {render, wait, act} from 'react-testing-library'
 import Usage from '../exercises-final/15'
 // import Usage from '../exercises/15'
 
-beforeEach(() => {
+const realError = console.error
+
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
   jest
     .spyOn(window, 'fetch')
     .mockImplementation(() =>
@@ -12,8 +15,27 @@ beforeEach(() => {
     )
 })
 
-afterEach(() => {
+afterAll(() => {
   window.fetch.mockRestore()
+  console.error.mockRestore()
+})
+
+beforeEach(() => {
+  window.fetch.mockClear()
+  console.error.mockClear()
+})
+
+afterEach(() => {
+  try {
+    expect(console.error).toHaveBeenCalledTimes(3)
+  } catch (_e) {
+    const badCalls = console.error.mock.calls.filter(
+      c => c[0] && c[0].includes('Warning'),
+    )
+    badCalls.forEach((...args) => {
+      realError(...args)
+    })
+  }
 })
 
 test('displays the pokemon', async () => {

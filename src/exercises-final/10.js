@@ -2,23 +2,25 @@
 import React from 'react'
 import VanillaTilt from 'vanilla-tilt'
 
-class Tilt extends React.Component {
-  rootRef = React.createRef()
-  componentDidMount() {
-    VanillaTilt.init(this.rootRef.current, {
+function Tilt(props) {
+  const tiltNode = React.useRef()
+
+  React.useEffect(() => {
+    const vanillaTiltOptions = {
       max: 25,
       speed: 400,
       glare: true,
       'max-glare': 0.5,
-    })
-  }
-  render() {
-    return (
-      <div ref={this.rootRef} className="tilt-root">
-        <div className="tilt-child">{this.props.children}</div>
-      </div>
-    )
-  }
+    }
+    VanillaTilt.init(tiltNode.current, vanillaTiltOptions)
+    return () => tiltNode.current.vanillaTilt.destroy()
+  }, [])
+
+  return (
+    <div ref={tiltNode} className="tilt-root">
+      <div className="tilt-child">{props.children}</div>
+    </div>
+  )
 }
 
 function Usage() {
