@@ -3,11 +3,10 @@ import React from 'react'
 
 function UsernameForm({onSubmitUsername, getErrorMessage}) {
   const [error, setError] = React.useState(getErrorMessage(''))
-  const inputRef = React.useRef()
 
   function handleSubmit(event) {
     event.preventDefault()
-    onSubmitUsername(inputRef.current.value)
+    onSubmitUsername(event.target.elements.username.value)
   }
 
   function handleChange(event) {
@@ -20,7 +19,6 @@ function UsernameForm({onSubmitUsername, getErrorMessage}) {
         id="name-input"
         type="text"
         name="username"
-        ref={inputRef}
         onChange={handleChange}
       />
       <div style={{color: 'red'}}>{error}</div>
