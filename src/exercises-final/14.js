@@ -14,24 +14,12 @@ function getStateFromArray(array) {
 function fancyFormReducer(state, action) {
   switch (action.type) {
     case 'COMMA_SEPARATED': {
-      const allVals = action.value
-        .split(',')
-        .map(v => v.trim())
-        .filter(Boolean)
-      return {
-        ...getStateFromArray(allVals),
-        commaSeparated: action.value,
-      }
+      const allVals = action.value.split(',')
+      return getStateFromArray(allVals)
     }
     case 'MULTILINE': {
-      const allVals = action.value
-        .split('\n')
-        .map(v => v.trim())
-        .filter(Boolean)
-      return {
-        ...getStateFromArray(allVals),
-        multiline: action.value,
-      }
+      const allVals = action.value.split('\n')
+      return getStateFromArray(allVals)
     }
     case 'MULTISELECT': {
       const allVals = Array.from(action.selectedOptions).map(o => o.value)
