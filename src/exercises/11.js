@@ -18,44 +18,43 @@ import VanillaTilt from 'vanilla-tilt'
 //
 // Here's a simple example of using the `ref` prop:
 //
-// const myDiv = React.createRef()
-// const ui = <div ref={myDiv}>hi</div>
-// ReactDOM.render(ui, document.getElementById('root'))
+// function MyDiv() {
+//   const myDiv = React.useRef()
+//   React.useEffect(() => {
+//     console.log(myDiv.current) // <-- myDiv.current is the div DOM node!
+//   }, [myDiv.current])
+//   return <div ref={myDiv}>hi</div>
+// }
+// ReactDOM.render(<MyDiv />, document.getElementById('root'))
 //
-// console.log(myDiv.current) // <-- myDiv.current is the div DOM node!
-//
-// Normally when you use this in a react class, you'll make the
-// ref (`myDiv`) an instance property of the class (similar to what we
-// do with `state`).
-//
-// After the component has been rendered, it's considered "mounted." By
-// this point, the ref should have its `current` property set to the
-// DOM node. So often you'll do direct DOM interactions/manipulations
-// in the `componentDidMount` lifecycle hook.
+// After the component has been rendered, it's considered "mounted." That's when
+// the React.useEffect callback is called and so by that point, the ref should
+// have its `current` property set to the DOM node. So often you'll do direct
+// DOM interactions/manipulations in the `useEffect` callback.
 
-class Tilt extends React.Component {
-  // 🐨 create a ref here as an instance property
-  // 💰 rootNode = ...
+function Tilt(props) {
+  // 🐨 create a ref here with React.useRef()
 
-  // 🐨 add a `componentDidMount` lifecycle hook (class method) here.
-  // and use VanillaTilt to make your div do cool stuff.
+  // 🐨 add a `React.useEffect` callback here and use VanillaTilt to make your
+  // div look fancy.
   // 💰 like this:
-  // VanillaTilt.init(yourDOMNode, {
+  // VanillaTilt.init(tiltRef, {
   //   max: 25,
   //   speed: 400,
   //   glare: true,
   //   'max-glare': 0.5,
   // })
+  // 💰 Don't forget to specify your effect's dependencies array with tiltRef.current!
   //
-  render() {
-    // 🐨 add a `ref` prop to the root `div` here and assign it to the
-    // `ref` you created on your instance.
-    return (
-      <div className="tilt-root">
-        <div className="tilt-child">{this.props.children}</div>
-      </div>
-    )
-  }
+  // 💰 Don't forget to return a cleanup function. VanillaTilt.init will add an
+  // object to your DOM node to cleanup: `tiltNode.current.vanillaTilt.destroy()`
+
+  // 🐨 add the `ref` prop to the `tilt-root` div here:
+  return (
+    <div className="tilt-root">
+      <div className="tilt-child">{props.children}</div>
+    </div>
+  )
 }
 
 // Don't make changes to the Usage component. It's here to show you how your
@@ -63,11 +62,9 @@ class Tilt extends React.Component {
 // You can make all the tests pass by updating the code above.
 function Usage() {
   return (
-    <div className="totally-centered">
-      <Tilt>
-        <div className="totally-centered">vanilla-tilt.js</div>
-      </Tilt>
-    </div>
+    <Tilt>
+      <div className="totally-centered">vanilla-tilt.js</div>
+    </Tilt>
   )
 }
 Usage.title = 'Interact with the DOM'
