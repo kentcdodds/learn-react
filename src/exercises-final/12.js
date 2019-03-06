@@ -1,56 +1,26 @@
-// Dynamic Forms
+// Basic Forms
 import React from 'react'
 
-function UsernameForm({onSubmitUsername, getErrorMessage}) {
-  const [error, setError] = React.useState(getErrorMessage(''))
-  const inputRef = React.useRef()
-
+function UsernameForm({onSubmitUsername}) {
+  const inputRef = React.createRef()
   function handleSubmit(event) {
     event.preventDefault()
     onSubmitUsername(inputRef.current.value)
   }
 
-  function handleChange(event) {
-    setError(getErrorMessage(event.target.value))
-  }
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="name-input">Username:</label>
-      <input
-        id="name-input"
-        type="text"
-        name="username"
-        ref={inputRef}
-        onChange={handleChange}
-      />
-      <div style={{color: 'red'}}>{error}</div>
-      <button disabled={Boolean(error)} type="submit">
-        Submit
-      </button>
+      <input id="name-input" type="text" name="username" ref={inputRef} />
+      <button type="submit">Submit</button>
     </form>
   )
 }
 
 function Usage() {
   const onSubmitUsername = username => console.log('username', username)
-  function getErrorMessage(value) {
-    if (value.length < 3) {
-      return `Value must be at least 3 characters, but is only ${value.length}`
-    }
-    if (!value.includes('s')) {
-      return `Value does not include "s" but it should!`
-    }
-    return null
-  }
-  return (
-    <div style={{minWidth: 400}}>
-      <UsernameForm
-        onSubmitUsername={onSubmitUsername}
-        getErrorMessage={getErrorMessage}
-      />
-    </div>
-  )
+  return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
-Usage.title = 'Dynamic Forms'
+Usage.title = 'Basic Forms'
 
 export default Usage

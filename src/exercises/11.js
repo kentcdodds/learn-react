@@ -1,43 +1,59 @@
-// Basic Forms
+// Interact with the DOM
 import React from 'react'
+// eslint-disable-next-line no-unused-vars
+import VanillaTilt from 'vanilla-tilt'
 
-// In React, there actually aren't a ton of things you have to learn
-// to interact with forms beyond what you can do with regular DOM
-// APIs and JavaScript.
+// Often when working with React you'll need to integrate with UI libraries.
+// Some of these need to work directly with the DOM. Remember that when you
+// do: <div>hi</div> that's actually syntactic sugar for a React.createElement
+// so you don't actually have access to DOM nodes in your render method.
+// In fact, DOM nodes aren't created at all until the ReactDOM.render method
+// is called. Your component's render method is really just responsible with
+// creating and returning React Elements and has nothing to do with the DOM
+// in particular.
 //
-// You can attach a submit handler to a form element with the `onSubmit`
-// prop. This will be called with the submit event which has a `target`.
-// That `target` will reference the `<form>` which has a reference to
-// the elements of the form which can be used to get the values out of
-// the form.
+// So to get access to the DOM, you need to ask React to give you access to
+// a particular DOM node when it renders your component. The way this happens
+// is through a special prop called `ref`.
+//
+// Here's a simple example of using the `ref` prop:
+//
+// const myDiv = React.createRef()
+// const ui = <div ref={myDiv}>hi</div>
+// ReactDOM.render(ui, document.getElementById('root'))
+//
+// console.log(myDiv.current) // <-- myDiv.current is the div DOM node!
+//
+// Normally when you use this in a react class, you'll make the
+// ref (`myDiv`) an instance property of the class (similar to what we
+// do with `state`).
+//
+// After the component has been rendered, it's considered "mounted." By
+// this point, the ref should have its `current` property set to the
+// DOM node. So often you'll do direct DOM interactions/manipulations
+// in the `componentDidMount` lifecycle hook.
 
-class UsernameForm extends React.Component {
-  // 🐨 add a submit event handler here (`handleSubmit`).
-  // Make sure to accept the `event` as an argument and call
-  // `event.preventDefault()` to prevent the default behavior
-  // of form submit events (which refreshes the page).
+class Tilt extends React.Component {
+  // 🐨 create a ref here as an instance property
+  // 💰 rootNode = ...
+
+  // 🐨 add a `componentDidMount` lifecycle hook (class method) here.
+  // and use VanillaTilt to make your div do cool stuff.
+  // 💰 like this:
+  // VanillaTilt.init(yourDOMNode, {
+  //   max: 25,
+  //   speed: 400,
+  //   glare: true,
+  //   'max-glare': 0.5,
+  // })
   //
-  // There are several ways to get the value of the name input:
-  //
-  // Via their index:
-  // event.target.elements[0]
-  //
-  // Via the elements object by their name:
-  // event.target.elements.username.value
-  //
-  // Or you could create a React ref and get the input that way.
-  //
-  // 🐨 get the value from the username input (using whichever method
-  // you prefer from the above options), and call `this.props.onSubmitUsername`
-  // with the value of the input.
   render() {
-    // add the `onSubmit` handler prop to the form
+    // 🐨 add a `ref` prop to the root `div` here and assign it to the
+    // `ref` you created on your instance.
     return (
-      <form>
-        <label htmlFor="name-input">Username:</label>
-        <input id="name-input" type="text" name="username" />
-        <button type="submit">Submit</button>
-      </form>
+      <div className="tilt-root">
+        <div className="tilt-child">{this.props.children}</div>
+      </div>
     )
   }
 }
@@ -45,11 +61,15 @@ class UsernameForm extends React.Component {
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the code above.
-function Usage({
-  onSubmitUsername = username => console.log('username', username),
-}) {
-  return <UsernameForm onSubmitUsername={onSubmitUsername} />
+function Usage() {
+  return (
+    <div className="totally-centered">
+      <Tilt>
+        <div className="totally-centered">vanilla-tilt.js</div>
+      </Tilt>
+    </div>
+  )
 }
-Usage.title = 'Basic Forms'
+Usage.title = 'Interact with the DOM'
 
 export default Usage

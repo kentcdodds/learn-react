@@ -3,29 +3,35 @@ import {render, fireEvent} from 'react-testing-library'
 import Usage from '../exercises-final/13'
 // import Usage from '../exercises/13'
 
-test('keeps things in sync', () => {
-  const {container} = render(<Usage />)
-  const input = container.querySelector('input')
-  const textarea = container.querySelector('textarea')
-  const select = container.querySelector('select')
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {})
+})
 
-  let currentValue = ['apple', 'grape', 'orange']
-  fireEvent.change(input, {target: {value: currentValue.join(',')}})
-  valuesAreCorrect()
+beforeEach(() => {
+  console.log.mockClear()
+})
 
-  // TODO...
-  // currentValue = ['cherry', 'peach']
-  // textarea.value = currentValue.join('\n')
-  // fireEvent.change(textarea)
-  // valuesAreCorrect()
+test('calls the onSubmitUsername handler when the submit is fired', () => {
+  const {getByLabelText, getByText} = render(<Usage />)
+  const input = getByLabelText(/username/i)
+  const submit = getByText(/submit/i)
 
-  function valuesAreCorrect() {
-    expect(input.value).toBe(currentValue.join(','))
-    expect(textarea.value).toBe(currentValue.join('\n'))
-    expect(Array.from(select.selectedOptions).map(o => o.value)).toEqual(
-      currentValue,
-    )
-  }
+  let value = 'a'
+  fireEvent.change(input, {target: {value}})
+  expect(submit).toBeDisabled() // too short
+  expect(getByText(/at least 3 characters/i)).toBeInTheDocument()
+
+  value = 'abcd'
+  fireEvent.change(input, {target: {value}})
+  expect(submit).toBeDisabled() // missing s
+  expect(getByText(/Value.*"s".*should/)).toBeInTheDocument()
+
+  value = 'Samwise'
+  fireEvent.change(input, {target: {value}})
+  fireEvent.click(submit)
+
+  expect(console.log).toHaveBeenCalledWith('username', input.value)
+  expect(console.log).toHaveBeenCalledTimes(1)
 })
 
 //////// Elaboration & Feedback /////////

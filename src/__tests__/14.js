@@ -1,10 +1,31 @@
 import React from 'react'
-import {render} from 'react-testing-library'
+import {render, fireEvent} from 'react-testing-library'
 import Usage from '../exercises-final/14'
 // import Usage from '../exercises/14'
 
-test('renders', () => {
-  render(<Usage />)
+test('keeps things in sync', () => {
+  const {container} = render(<Usage />)
+  const input = container.querySelector('input')
+  const textarea = container.querySelector('textarea')
+  const select = container.querySelector('select')
+
+  let currentValue = ['apple', 'grape', 'orange']
+  fireEvent.change(input, {target: {value: currentValue.join(',')}})
+  valuesAreCorrect()
+
+  // TODO...
+  // currentValue = ['cherry', 'peach']
+  // textarea.value = currentValue.join('\n')
+  // fireEvent.change(textarea)
+  // valuesAreCorrect()
+
+  function valuesAreCorrect() {
+    expect(input.value).toBe(currentValue.join(','))
+    expect(textarea.value).toBe(currentValue.join('\n'))
+    expect(Array.from(select.selectedOptions).map(o => o.value)).toEqual(
+      currentValue,
+    )
+  }
 })
 
 //////// Elaboration & Feedback /////////

@@ -18,6 +18,7 @@ const files = [
   '13',
   '14',
   '15',
+  '16',
 ]
 
 const pages = files.reduce((p, filename, index, fullArray) => {

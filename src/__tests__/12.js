@@ -16,18 +16,7 @@ test('calls the onSubmitUsername handler when the submit is fired', () => {
   const input = getByLabelText(/username/i)
   const submit = getByText(/submit/i)
 
-  let value = 'a'
-  fireEvent.change(input, {target: {value}})
-  expect(submit).toBeDisabled() // too short
-  expect(getByText(/at least 3 characters/i)).toBeInTheDocument()
-
-  value = 'abcd'
-  fireEvent.change(input, {target: {value}})
-  expect(submit).toBeDisabled() // missing s
-  expect(getByText(/Value.*"s".*should/)).toBeInTheDocument()
-
-  value = 'Samwise'
-  fireEvent.change(input, {target: {value}})
+  fireEvent.change(input, {target: {value: 'Jenny'}})
   fireEvent.click(submit)
 
   expect(console.log).toHaveBeenCalledWith('username', input.value)

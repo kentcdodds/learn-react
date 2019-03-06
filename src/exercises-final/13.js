@@ -1,113 +1,56 @@
-// Controlled Form Fields
+// Dynamic Forms
 import React from 'react'
 
-const availableOptions = ['apple', 'grape', 'cherry', 'orange', 'pear', 'peach']
+function UsernameForm({onSubmitUsername, getErrorMessage}) {
+  const [error, setError] = React.useState(getErrorMessage(''))
+  const inputRef = React.useRef()
 
-function getStateFromArray(array) {
-  return {
-    commaSeparated: array.join(','),
-    multiline: array.join('\n'),
-    multiselect: array.filter(v => availableOptions.includes(v)),
+  function handleSubmit(event) {
+    event.preventDefault()
+    onSubmitUsername(inputRef.current.value)
   }
-}
 
-function fancyFormReducer(state, action) {
-  switch (action.type) {
-    case 'COMMA_SEPARATED': {
-      const allVals = action.value
-        .split(',')
-        .map(v => v.trim())
-        .filter(Boolean)
-      return {
-        ...getStateFromArray(allVals),
-        commaSeparated: action.value,
-      }
-    }
-    case 'MULTILINE': {
-      const allVals = action.value
-        .split('\n')
-        .map(v => v.trim())
-        .filter(Boolean)
-      return {
-        ...getStateFromArray(allVals),
-        multiline: action.value,
-      }
-    }
-    case 'MULTISELECT': {
-      const allVals = Array.from(action.selectedOptions).map(o => o.value)
-      return getStateFromArray(allVals)
-    }
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+  function handleChange(event) {
+    setError(getErrorMessage(event.target.value))
   }
-}
-
-function MyFancyForm() {
-  const [state, dispatch] = React.useReducer(fancyFormReducer, {
-    multiline: '',
-    commaSeparated: '',
-    multiselect: [],
-  })
-  const {multiline, commaSeparated, multiselect} = state
-
   return (
-    <form>
-      <div>
-        <label>
-          comma separated values:
-          <br />
-          <input
-            type="text"
-            value={commaSeparated}
-            onChange={event =>
-              dispatch({type: 'COMMA_SEPARATED', value: event.target.value})
-            }
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          multiline values:
-          <br />
-          <textarea
-            value={multiline}
-            rows={availableOptions.length}
-            onChange={event =>
-              dispatch({type: 'MULTILINE', value: event.target.value})
-            }
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          multiselect values:
-          <br />
-          <select
-            multiple
-            value={multiselect}
-            size={availableOptions.length}
-            onChange={event =>
-              dispatch({
-                type: 'MULTISELECT',
-                selectedOptions: event.target.selectedOptions,
-              })
-            }
-          >
-            {availableOptions.map(optionValue => (
-              <option key={optionValue} value={optionValue}>
-                {optionValue}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="name-input">Username:</label>
+      <input
+        id="name-input"
+        type="text"
+        name="username"
+        ref={inputRef}
+        onChange={handleChange}
+      />
+      <div style={{color: 'red'}}>{error}</div>
+      <button disabled={Boolean(error)} type="submit">
+        Submit
+      </button>
     </form>
   )
 }
 
 function Usage() {
-  return <MyFancyForm />
+  const onSubmitUsername = username => console.log('username', username)
+  function getErrorMessage(value) {
+    if (value.length < 3) {
+      return `Value must be at least 3 characters, but is only ${value.length}`
+    }
+    if (!value.includes('s')) {
+      return `Value does not include "s" but it should!`
+    }
+    return null
+  }
+  return (
+    <div style={{minWidth: 400}}>
+      <UsernameForm
+        onSubmitUsername={onSubmitUsername}
+        getErrorMessage={getErrorMessage}
+      />
+    </div>
+  )
 }
-Usage.title = 'Controlled Form Fields'
+Usage.title = 'Dynamic Forms'
 
 export default Usage

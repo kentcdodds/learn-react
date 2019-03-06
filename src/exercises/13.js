@@ -1,107 +1,41 @@
-// Controlled Form Fields
+// Dynamic Forms
 import React from 'react'
 
-// here, we want to be able to update the state of the form
-// fields based on changes to other fields. This uses a pattern
-// called "controlled props" which is supported by all form
-// fields in React.
+// if we want our form to be dynamic, we'll need a few things:
+// 1. Component state to store the dynamic values (an error message in our case)
+// 2. A change handler on the input so we know what the value is as the user changes it
 //
-// To control the value of (most) form fields, you simply pass
-// a `value` prop to the element and it becomes controlled.
-// From there on, React will cease to attempt to update the value
-// itself as the user attempts to make changes to it. Instead,
-// you are responsible for making sure that it's kept up to date.
-//
-// You can do this with the `onChange` prop. Whenever the user
-// makes a change to the field value, react will call your change
-// handler and you can use `event.target` to know what the new
-// value should be.
+// In our usage example below, we provide a prop called `getErrorMessage`.
+// This serves as our simple validation. If it returns a string, that's an error
+// message we should display below the input. We'll store this value in state
+// and use that to know whether to render the message as well as whether to
+// disable the submit button.
 
-const availableOptions = ['apple', 'grape', 'cherry', 'orange', 'pear', 'peach']
-class MyFancyForm extends React.Component {
-  // because React will not be able to update the state of the fields
-  // we'll need to store that state ourselves.
-  // 🐨 initialize state here for each of the fields:
-  //   commaSeparated: '' (for the <input />)
-  //   multiline: '' (for the <textarea />)
-  //   multiSelect: [] (for the <select />)
-  //
-  // Now we need to add an event handler for each of the form fields.
-  // The purpose of each event handler is to get the value from the
-  // `event.target`, turn that value into an array, and pass that
-  // array into `setStateForAllFields` along with an override for
-  // the current field. As an example, I'll give you one of the
-  // handlers.
-  handleCommaSeparatedChange = event => {
-    const {value} = event.target
-    const allVals = value
-      .split(',')
-      .map(v => v.trim())
-      .filter(Boolean)
-    this.setStateForAllFields(allVals, {commaSeparated: value})
+class UsernameForm extends React.Component {
+  // 🐨 add some state to this form for the error.
+  // 💰 initialize it with an error property that's assigned to `this.props.getErrorMessage('')`
+  inputRef = React.createRef()
+  handleSubmit = event => {
+    event.preventDefault()
+    this.props.onSubmitUsername(this.inputRef.current.value)
   }
-  // 🐨 add handleMultilineChange for the <textarea />
-  // 💰 you'll get the value from `event.target.value`
-  // and you'll need to split it by newlines (\n)
-  //
-  // 🐨 add handleMultiSelectChange for the <select />
-  // 💰 you'll get the value from `event.target.selectedOptions`
-  // which is an HTMLCollection of <option /> elements.
-  // You can turn this into an Array with `Array.from` and map
-  // that to the option values with `.map(o => o.value)`
-
-  setStateForAllFields(arrayOfItems, overrides) {
-    // I'm leaving this for you because I love you.
-    this.setState({
-      commaSeparated: arrayOfItems.join(','),
-      multiline: arrayOfItems.join('\n'),
-      multiSelect: arrayOfItems.filter(v => availableOptions.includes(v)),
-      ...overrides,
-    })
-  }
+  // 🐨 create a bound `handleChange` function that takes the
+  // value of the input and updates the `error` state to
+  // whatever is returned from `this.props.getErrorMessage`
   render() {
     return (
-      <form>
-        <div>
-          <label>
-            comma separated values:
-            <br />
-            <input
-              // 🐨 add a value prop for the commaSeparated state
-              // 🐨 also add an onChange for your `handleCommaSeparatedChange` handler
-              type="text"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiline values:
-            <br />
-            <textarea
-              // 🐨 add a value prop for the multiline state
-              // 🐨 also add an onChange for your `handleMultilineChange` handler
-              rows={availableOptions.length}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            multiSelect values:
-            <br />
-            <select
-              // 🐨 add a value prop for the state of the multiSelect
-              // 🐨 also add an onChange for your `handleMultiSelectChange` handler
-              size={availableOptions.length}
-              multiple
-            >
-              {availableOptions.map(optionValue => (
-                <option key={optionValue} value={optionValue}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+      <form onSubmit={this.handleSubmit}>
+        <label htmlFor="name-input">Username:</label>
+        <input
+          id="name-input"
+          type="text"
+          name="username"
+          ref={this.inputRef}
+          // 🐨 add your onChange handler here
+        />
+        {/* 🐨 if there's an error, then render it in a div here */}
+        {/* 🐨 add a disabled prop to this button that's set to true if there's an error */}
+        <button type="submit">Submit</button>
       </form>
     )
   }
@@ -110,9 +44,26 @@ class MyFancyForm extends React.Component {
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the code above.
-function Usage() {
-  return <MyFancyForm />
+function Usage({
+  onSubmitUsername = username => console.log('username', username),
+}) {
+  return (
+    <UsernameForm
+      onSubmitUsername={onSubmitUsername}
+      getErrorMessage={value => {
+        if (value.length < 3) {
+          return `Value must be at least 3 characters, but is only ${
+            value.length
+          }`
+        }
+        if (!value.includes('s')) {
+          return `Value does not include "s" but it should!`
+        }
+        return null
+      }}
+    />
+  )
 }
-Usage.title = 'Controlled Form Fields'
+Usage.title = 'Dynamic Forms'
 
 export default Usage

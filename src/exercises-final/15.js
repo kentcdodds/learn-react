@@ -1,117 +1,43 @@
-// Making HTTP requests
+// Rendering Arrays
 import React from 'react'
 
-function fetchPokemonReducer(state, action) {
-  switch (action.type) {
-    case 'FETCHING': {
-      return {
-        ...state,
-        loading: true,
-      }
-    }
-    case 'FETCHED': {
-      return {
-        error: null,
-        loading: false,
-        pokemon: action.pokemon,
-      }
-    }
-    case 'FETCH_ERROR': {
-      return {
-        ...state,
-        error: action.error,
-        loading: false,
-      }
-    }
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+
+function App() {
+  const [items, setItems] = React.useState([])
+
+  function addItem() {
+    setItems([...items, allItems.find(i => !items.includes(i))])
   }
-}
 
-function FetchPokemon({pokemonName}) {
-  const [state, dispatch] = React.useReducer(fetchPokemonReducer, {
-    pokemon: null,
-    loading: false,
-    error: null,
-  })
-  const {pokemon, loading, error} = state
+  function removeItem(item) {
+    setItems(items.filter(i => i !== item))
+  }
 
-  React.useEffect(() => {
-    dispatch({type: 'FETCHING'})
-    fetchPokemon(pokemonName).then(
-      pokemon => dispatch({type: 'FETCHED', pokemon}),
-      error => dispatch({type: 'FETCH_ERROR', error}),
-    )
-  }, [pokemonName])
-
-  return loading ? (
-    '...'
-  ) : error ? (
-    'ERROR (check your developer tools network tab)'
-  ) : (
-    <pre>{JSON.stringify(pokemon || 'Unknown', null, 2)}</pre>
+  return (
+    <div>
+      <button disabled={items.length >= allItems.length} onClick={addItem}>
+        +
+      </button>
+      {items.map(i => (
+        <div key={i.id}>
+          <button onClick={() => removeItem(i)}>-</button>
+          {i.value}:
+          <input defaultValue={i.value} />
+        </div>
+      ))}
+    </div>
   )
 }
 
-function fetchPokemon(name) {
-  const pokemonQuery = `
-    query ($name: String) {
-      pokemon(name: $name) {
-        id
-        number
-        name
-        attacks {
-          special {
-            name
-            type
-            damage
-          }
-        }
-      }
-    }
-  `
-
-  return window
-    .fetch('https://graphql-pokemon.now.sh', {
-      // learn more about this API here: https://graphql-pokemon.now.sh/
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        query: pokemonQuery,
-        variables: {name},
-      }),
-    })
-    .then(r => r.json())
-    .then(response => response.data.pokemon)
+function Usage() {
+  return <App />
 }
-
-class Usage extends React.Component {
-  state = {pokemonName: null}
-  inputRef = React.createRef()
-  handleSubmit = e => {
-    e.preventDefault()
-    this.setState({
-      pokemonName: this.inputRef.current.value,
-    })
-  }
-  render() {
-    const {pokemonName} = this.state
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
-          <input id="pokemonName-input" ref={this.inputRef} />
-          <button type="submit">Submit</button>
-        </form>
-        <div data-testid="pokemon-display">
-          {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
-        </div>
-      </div>
-    )
-  }
-}
-Usage.title = 'Making HTTP requests'
+Usage.title = 'Rendering Arrays: the key prop'
 
 export default Usage
