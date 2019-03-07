@@ -40,7 +40,8 @@ const largeBox = <div>large orange box</div>
 // 💯 As extra credit, try to make a Box component that renders a div and
 // accepts a `size` prop rather than a className and also merges the `style`
 // prop and `className` props as well.
-// Feel free to peak at the exercises-final/02-extra.js for more details.
+// Feel free to peak at the exercises-final/02-extra-0.js for more details.
+// Note: The tests for 02 and 02-extra-0.js are the same :)
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.

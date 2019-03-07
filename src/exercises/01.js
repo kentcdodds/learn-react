@@ -22,6 +22,7 @@ function SayHello(props) {
 //
 // 💰 to find out what's available, try this:
 // console.log(PropTypes)
+// 💰 You can read the documentation for PropTypes on npm: https://npm.im/prop-types
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
