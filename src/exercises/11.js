@@ -38,16 +38,20 @@ function Tilt(props) {
   // 🐨 add a `React.useEffect` callback here and use VanillaTilt to make your
   // div look fancy.
   // 💰 like this:
-  // VanillaTilt.init(tiltRef, {
+  // const tiltNode = tiltRef.current
+  // VanillaTilt.init(tiltNode, {
   //   max: 25,
   //   speed: 400,
   //   glare: true,
   //   'max-glare': 0.5,
   // })
-  // 💰 Don't forget to specify your effect's dependencies array with tiltRef.current!
   //
   // 💰 Don't forget to return a cleanup function. VanillaTilt.init will add an
-  // object to your DOM node to cleanup: `tiltNode.current.vanillaTilt.destroy()`
+  // object to your DOM node to cleanup: `tiltNode.vanillaTilt.destroy()`
+  //
+  // 💰 Don't forget to specify your effect's dependencies array! In our case
+  // we know that the tilt node will never change, so make it `[]`. Ask me about
+  // this for a more in depth explination.
 
   // 🐨 add the `ref` prop to the `tilt-root` div here:
   return (

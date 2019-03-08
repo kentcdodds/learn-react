@@ -10,9 +10,12 @@ function useLocalStorageState({
   const [state, setState] = React.useState(
     () => deserialize(window.localStorage.getItem(key)) || initialValue,
   )
+
+  const serializedState = serialize(state)
   React.useEffect(() => {
-    window.localStorage.setItem(key, serialize(state))
-  }, [serialize(state)])
+    window.localStorage.setItem(key, serializedState)
+  }, [key, serialize, serializedState])
+
   return [state, setState]
 }
 
