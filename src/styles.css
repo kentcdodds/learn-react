@@ -95,3 +95,8 @@ https://micku7zu.github.io/vanilla-tilt.js/index.html
 .game-info {
   margin-left: 20px;
 }
+
+/* bar graph */
+.bar {
+  fill: steelblue;
+}
