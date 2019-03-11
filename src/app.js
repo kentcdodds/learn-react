@@ -1,6 +1,5 @@
 import React from 'react'
-import {Route, Switch} from 'react-router'
-import {BrowserRouter, Link} from 'react-router-dom'
+import {Router, Link} from '@reach/router'
 
 const files = [
   '01',
@@ -49,27 +48,6 @@ const filesAndTitles = files.map(filename => ({
   filename,
 }))
 
-class ErrorCatcher extends React.Component {
-  static getDerivedStateFromProps() {
-    // if the props change then let's try rendering again...
-    return {error: null}
-  }
-  state = {error: null}
-  componentDidCatch(error, info) {
-    console.log(error, info)
-    this.setState({error})
-  }
-  render() {
-    const {error} = this.state
-    const {children, ...props} = this.props
-    return (
-      <div {...props}>
-        {error ? 'There was an error. Edit the code and try again.' : children}
-      </div>
-    )
-  }
-}
-
 function ComponentContainer({label, ...props}) {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -83,15 +61,13 @@ function ComponentContainer({label, ...props}) {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-      >
-        <ErrorCatcher {...props} />
-      </div>
+        {...props}
+      />
     </div>
   )
 }
 
-function ExerciseContainer({match}) {
-  const {exerciseId} = match.params
+function ExerciseContainer({exerciseId}) {
   const {
     exercise: {default: Exercise},
     final: {default: Final},
@@ -168,8 +144,7 @@ function NavigationFooter({exerciseId, type}) {
   )
 }
 
-function FullPage({type, match}) {
-  const {exerciseId} = match.params
+function FullPage({type, exerciseId}) {
   const page = pages[exerciseId]
   const {default: Usage, isolatedPath} = pages[exerciseId][type]
   return (
@@ -205,9 +180,7 @@ function FullPage({type, match}) {
           justifyContent: 'center',
         }}
       >
-        <ErrorCatcher>
-          <Usage />
-        </ErrorCatcher>
+        <Usage />
       </div>
       <NavigationFooter exerciseId={exerciseId} type={type} />
     </div>
@@ -256,99 +229,56 @@ function Home() {
   )
 }
 
+function NotFound() {
+  return (
+    <div
+      style={{
+        height: '100%',
+        display: 'grid',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div>
+        Sorry... nothing here. To open one of the exercises, go to{' '}
+        <code>{`/exerciseId`}</code>, for example:{' '}
+        <Link to="/01">
+          <code>{`/01`}</code>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+const IsolatedExercise = ({moduleName}) => (
+  <Isolated loader={() => import(`./exercises/${moduleName}`)} />
+)
+const IsolatedFinal = ({moduleName}) => (
+  <Isolated loader={() => import(`./exercises-final/${moduleName}`)} />
+)
+
+const IsolatedTestComponent = ({moduleName}) => (
+  <Isolated loader={() => import(`./testing/components/${moduleName}`)} />
+)
+
+const FakeApp = () => <div>{`Welcome to our fake app ;-)`}</div>
+
 function App() {
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact={true} component={Home} />
-          <Route
-            path={`/:exerciseId`}
-            exact={true}
-            component={ExerciseContainer}
-          />
-          <Route
-            path={`/:exerciseId/exercise`}
-            render={props => <FullPage {...props} type="exercise" />}
-            exact={true}
-          />
-          <Route
-            path={`/:exerciseId/final`}
-            render={props => <FullPage {...props} type="final" />}
-            exact={true}
-          />
-          <Route
-            path={`/isolated/exercises/:moduleName`}
-            exact={true}
-            render={({
-              match: {
-                params: {moduleName},
-              },
-            }) => (
-              <Isolated loader={() => import(`./exercises/${moduleName}`)} />
-            )}
-          />
-          <Route
-            path={`/isolated/exercises-final/:moduleName`}
-            exact={true}
-            render={({
-              match: {
-                params: {moduleName},
-              },
-            }) => (
-              <Isolated
-                loader={() => import(`./exercises-final/${moduleName}`)}
-              />
-            )}
-          />
-          <Route
-            path={`/isolated/testing/components/:moduleName`}
-            exact={true}
-            render={({
-              match: {
-                params: {moduleName},
-              },
-            }) => (
-              <Isolated
-                loader={() => import(`./testing/components/${moduleName}`)}
-              />
-            )}
-          />
-          <Route
-            render={() => (
-              <div
-                style={{
-                  height: '100%',
-                  display: 'grid',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <div>
-                  Sorry... nothing here. To open one of the exercises, go to{' '}
-                  <code>{`/exerciseId`}</code>, for example:{' '}
-                  <Link to="/01">
-                    <code>{`/01`}</code>
-                  </Link>
-                </div>
-              </div>
-            )}
-          />
-        </Switch>
-      </BrowserRouter>
+      <Router>
+        <Home path="/" />
+        <FakeApp path="/app" />
+        <ExerciseContainer path="/:exerciseId" />
+        <FullPage path="/:exerciseId/exercise" type="exercise" />
+        <FullPage path="/:exerciseId/final" type="final" />
+        <IsolatedExercise path="/isolated/exercises/:moduleName" />
+        <IsolatedFinal path="/isolated/exercises-final/:moduleName" />
+        <IsolatedTestComponent path="/isolated/testing/components/:moduleName" />
+        <NotFound default />
+      </Router>
     </React.Suspense>
   )
 }
 
 export {App}
-
-/* eslint
-"no-unused-vars": [
-  "warn",
-  {
-    "argsIgnorePattern": "^_.+|^ignore.+",
-    "varsIgnorePattern": "^_.+|^ignore.+",
-    "args": "after-used"
-  }
-]
- */

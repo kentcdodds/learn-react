@@ -18,7 +18,7 @@ function Login({onSubmit}) {
       </div>
       <div>
         <label htmlFor="password-field">Password</label>
-        <input id="password-field" name="password" />
+        <input id="password-field" name="password" type="password" />
       </div>
       <div>
         <button type="submit">Submit</button>
