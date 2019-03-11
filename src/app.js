@@ -214,32 +214,23 @@ function FullPage({type, match}) {
   )
 }
 
-class Isolated extends React.Component {
-  Component = React.lazy(() => {
-    const {moduleName} = this.props.match.params
-    return this.props.type === 'exercise'
-      ? import(`./exercises/${moduleName}`)
-      : this.props.type === 'final'
-      ? import(`./exercises-final/${moduleName}`)
-      : null
-  })
-  render() {
-    return (
-      <div
-        style={{
-          padding: 30,
-          height: '100%',
-          display: 'grid',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div>
-          <this.Component />
-        </div>
+function Isolated({loader}) {
+  const Component = React.useMemo(() => React.lazy(loader), [loader])
+  return (
+    <div
+      style={{
+        padding: 30,
+        height: '100%',
+        display: 'grid',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div>
+        <Component />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 function Home() {
@@ -289,12 +280,39 @@ function App() {
           <Route
             path={`/isolated/exercises/:moduleName`}
             exact={true}
-            render={props => <Isolated {...props} type="exercise" />}
+            render={({
+              match: {
+                params: {moduleName},
+              },
+            }) => (
+              <Isolated loader={() => import(`./exercises/${moduleName}`)} />
+            )}
           />
           <Route
             path={`/isolated/exercises-final/:moduleName`}
             exact={true}
-            render={props => <Isolated {...props} type="final" />}
+            render={({
+              match: {
+                params: {moduleName},
+              },
+            }) => (
+              <Isolated
+                loader={() => import(`./exercises-final/${moduleName}`)}
+              />
+            )}
+          />
+          <Route
+            path={`/isolated/testing/components/:moduleName`}
+            exact={true}
+            render={({
+              match: {
+                params: {moduleName},
+              },
+            }) => (
+              <Isolated
+                loader={() => import(`./testing/components/${moduleName}`)}
+              />
+            )}
           />
           <Route
             render={() => (
