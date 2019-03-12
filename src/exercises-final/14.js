@@ -7,7 +7,7 @@ function getStateFromArray(array) {
   return {
     commaSeparated: array.join(','),
     multiline: array.join('\n'),
-    multiselect: array.filter(v => availableOptions.includes(v)),
+    multiSelect: array.filter(v => availableOptions.includes(v)),
   }
 }
 
@@ -34,9 +34,9 @@ function MyFancyForm() {
   const [state, dispatch] = React.useReducer(fancyFormReducer, {
     multiline: '',
     commaSeparated: '',
-    multiselect: [],
+    multiSelect: [],
   })
-  const {multiline, commaSeparated, multiselect} = state
+  const {multiline, commaSeparated, multiSelect} = state
 
   return (
     <form>
@@ -72,7 +72,7 @@ function MyFancyForm() {
           <br />
           <select
             multiple
-            value={multiselect}
+            value={multiSelect}
             size={availableOptions.length}
             onChange={event =>
               dispatch({
