@@ -87,30 +87,24 @@ function fetchPokemon(name) {
     .then(response => response.data.pokemon)
 }
 
-class Usage extends React.Component {
-  state = {pokemonName: null}
-  inputRef = React.createRef()
-  handleSubmit = e => {
+function Usage() {
+  const [pokemonName, setPokemonName] = React.useState(null)
+  function handleSubmit(e) {
     e.preventDefault()
-    this.setState({
-      pokemonName: this.inputRef.current.value,
-    })
+    setPokemonName(e.target.elements.pokemonName.value)
   }
-  render() {
-    const {pokemonName} = this.state
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
-          <input id="pokemonName-input" ref={this.inputRef} />
-          <button type="submit">Submit</button>
-        </form>
-        <div data-testid="pokemon-display">
-          {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
-        </div>
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="pokemonName-input">Pokemon Name (ie Pikachu)</label>
+        <input id="pokemonName-input" name="pokemonName" />
+        <button type="submit">Submit</button>
+      </form>
+      <div data-testid="pokemon-display">
+        {pokemonName ? <FetchPokemon pokemonName={pokemonName} /> : null}
       </div>
-    )
-  }
+    </div>
+  )
 }
 Usage.title = 'Making HTTP requests'
 

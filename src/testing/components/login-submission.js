@@ -1,29 +1,36 @@
 // http://localhost:3000/isolated/testing/components/login-submission
+//
+// The <LoginSubmission /> component uses our <Login /> component and actually
+// submits the formData to /api/login and redirects the user or shows an error
+// message if the request failed.
+//
+// NOTE: that while this is calling `fetch`, we're actually NOT making a real
+// HTTP call in this app. If you checkout `hack-fetch.js` you'll se that we're
+// overriding fetch to serve a fake response for the purposes of our demo app.
+// 🚨  In the app you can simulate a failure by using "fail" as the password.
+//     (this does not apply to the tests however).
+
 import React from 'react'
-import {Redirect} from '@reach/router'
+import {navigate} from '@reach/router'
 import Login from './login'
 
 function formSubmissionReducer(state, action) {
   switch (action.type) {
     case 'SUBMIT': {
-      return {
-        loading: true,
-        success: false,
-        errorMessage: null,
-      }
+      return {loading: true, responseData: null, errorMessage: null}
     }
     case 'SUCCESS': {
       return {
         loading: false,
-        success: true,
+        responseData: action.responseData,
         errorMessage: null,
       }
     }
     case 'ERROR': {
       return {
         loading: false,
-        success: false,
-        errorMessage: action.e.message,
+        responseData: null,
+        errorMessage: action.error.errors[0],
       }
     }
     default:
@@ -34,7 +41,7 @@ function formSubmissionReducer(state, action) {
 function useFormSubmission({endpoint, data}) {
   const [state, dispatch] = React.useReducer(formSubmissionReducer, {
     loading: false,
-    success: false,
+    responseData: null,
     errorMessage: null,
   })
 
@@ -51,9 +58,14 @@ function useFormSubmission({endpoint, data}) {
             'content-type': 'application/json;charset=UTF-8',
           },
         })
+        .then(r => r.json())
         .then(
-          () => dispatch({type: 'SUCCESS'}),
-          e => dispatch({type: 'ERROR', error: e}),
+          responseData => {
+            dispatch({type: 'SUCCESS', responseData})
+          },
+          error => {
+            dispatch({type: 'ERROR', error})
+          },
         )
     }
   }, [fetchBody, endpoint])
@@ -62,18 +74,31 @@ function useFormSubmission({endpoint, data}) {
 }
 
 function Spinner() {
-  return '...'
+  return (
+    <div className="lds-ripple" aria-label="loading...">
+      <div />
+      <div />
+    </div>
+  )
 }
 
 function LoginSubmission() {
   const [formData, setFormData] = React.useState(null)
-  const {loading, success, errorMessage} = useFormSubmission({
-    endpoint: '/fake-endpoint',
+  const {loading, responseData, errorMessage} = useFormSubmission({
+    endpoint: '/api/login',
     data: formData,
   })
 
-  if (success) {
-    return <Redirect to="/app" replace={false} noThrow />
+  const token = responseData && responseData.token
+  React.useEffect(() => {
+    if (token) {
+      window.localStorage.setItem('token', token)
+      navigate('/app')
+    }
+  }, [token])
+
+  if (responseData) {
+    return null
   }
 
   return (

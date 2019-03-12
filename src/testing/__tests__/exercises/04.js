@@ -18,14 +18,14 @@ test('submitting the form calls onSubmit with username and password', () => {
   // 🐨 fire a click event on the button with the text "Submit"
   //
   // assert that submitData is correct
-  // 💰 use `toEqual` from Jest: https://jestjs.io/docs/en/expect#toequalvalue
+  // 💰 use `toEqual` from Jest: 📜 https://jestjs.io/docs/en/expect#toequalvalue
 })
 
 // 💯 Jest has built-in "mock" function APIs. Rather than creating the
 // "submittedData" variable, try to use a mock function and assert it was called
 // correctly:
-// `jest.fn()`: https://jestjs.io/docs/en/mock-function-api
-// `toHaveBeenCalledWith`: https://jestjs.io/docs/en/expect#tohavebeencalledwitharg1-arg2-
+// `jest.fn()`: 📜 https://jestjs.io/docs/en/mock-function-api
+// `toHaveBeenCalledWith`: 📜 https://jestjs.io/docs/en/expect#tohavebeencalledwitharg1-arg2-
 
 //////// Elaboration & Feedback /////////
 // When you've finished with the exercises:
@@ -34,7 +34,7 @@ test('submitting the form calls onSubmit with username and password', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react%20testing&e=02&em=
+http://ws.kcd.im/?ws=learn%20react%20testing&e=04&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!

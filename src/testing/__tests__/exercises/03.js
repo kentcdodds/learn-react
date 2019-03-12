@@ -40,7 +40,7 @@ test('counter increments when the button is clicked', () => {
 // 💯 you'll want to cleanup after every test in this file, so you can use
 // a utility in Jest to automatically run the `cleanup` function after each
 // test. Read about it here and implement it at the top of the file:
-// https://jestjs.io/docs/en/setup-teardown
+// 📜 https://jestjs.io/docs/en/setup-teardown
 
 // 💯 this project has jest-dom installed and configured. Swap
 // `expect(button.textContent).toBe('0')` with
@@ -54,7 +54,7 @@ test('counter increments when the button is clicked', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=learn%20react%20testing&e=02&em=
+http://ws.kcd.im/?ws=learn%20react%20testing&e=03&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
