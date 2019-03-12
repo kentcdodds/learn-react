@@ -41,7 +41,7 @@ function Board() {
   }
 
   // let's calculate the status we'll display at the top of the board.
-  // 🐨 determine whether there's a winner (💰 `calculatWinner(squares)`).
+  // 🐨 determine whether there's a winner (💰 `calculateWinner(squares)`).
   //
   // We can have the following statuses:
   // `Winner: ${winner}`
@@ -68,7 +68,7 @@ function Board() {
   return 'todo'
 }
 
-// 💯 See if you can figure out a nice way to avoid all the reptition in the square buttons
+// 💯 See if you can figure out a nice way to avoid all the repetition in the square buttons
 
 // 💯 Open /isolated/exercises-final/09-extra-0 and see that the extra version
 //    supports keeping a history of the game and allows you to go backward and

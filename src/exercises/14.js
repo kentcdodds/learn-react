@@ -25,7 +25,7 @@ function getStateFromArray(array) {
   return {
     commaSeparated: array.join(','),
     multiline: array.join('\n'),
-    multiselect: array.filter(v => availableOptions.includes(v)),
+    multiSelect: array.filter(v => availableOptions.includes(v)),
   }
 }
 
