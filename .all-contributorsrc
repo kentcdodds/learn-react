@@ -29,6 +29,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "ta1188",
+      "name": "Trevor A",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/18534488?v=4",
+      "profile": "https://github.com/ta1188",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "contributorsPerLine": 7
 }
