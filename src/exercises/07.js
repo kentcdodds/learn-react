@@ -33,7 +33,7 @@ import React from 'react'
 //    Luckily for us, React.useEffect allows you to pass a second argument
 //    called the "inputs array" which signals to React that your effect callback
 //    function should be called when (and only when) those inputs change.
-//    So we can use this to avoid doing unecessary work!
+//    So we can use this to avoid doing unnecessary work!
 
 // NOTE: even though it's called the "inputs array," react does not actually
 // pass those values as inputs to your effect callback. It's more conceptual.

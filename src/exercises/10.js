@@ -94,7 +94,7 @@ function Game() {
   // place resulting in an easier maintenance situation for you :)
 
   // the selectSquare function's entire purpose is to perform calculations to
-  // determine what state changes should happen (if any). That's precicely what
+  // determine what state changes should happen (if any). That's precisely what
   // the reducer is responsible for!
   // 🐨 let's move this logic to your reducer and instead call dispatch and let
   // dispatch handle this to determine the next state.
