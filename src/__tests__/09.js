@@ -2,6 +2,7 @@ import React from 'react'
 import {render, fireEvent} from 'react-testing-library'
 import Usage from '../exercises-final/09'
 // import Usage from '../exercises/09'
+// import Usage from '../exercises/09.classes'
 
 test('can play a game of tic tac toe', () => {
   const {container, getByText} = render(<Usage />)
