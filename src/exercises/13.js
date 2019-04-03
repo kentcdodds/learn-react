@@ -44,9 +44,13 @@ function UsernameForm({onSubmitUsername, getErrorMessage}) {
   )
 }
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
-// You can make all the tests pass by updating the code above.
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
+
 function Usage() {
   const onSubmitUsername = username => console.log('username', username)
   function getErrorMessage(value) {

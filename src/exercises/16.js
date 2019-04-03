@@ -61,11 +61,12 @@ function FetchPokemon({pokemonName}) {
   return 'todo'
 }
 
-/////////////////////////////////////////////////
-//
-// You should not need to change anything below this line
-//
-/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
 
 function fetchPokemon(name) {
   const pokemonQuery = `

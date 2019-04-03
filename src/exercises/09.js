@@ -85,8 +85,12 @@ function Game() {
   )
 }
 
-// Don't make changes below here. It's here to show you how your
-// component is intended to be used and is used in the tests.
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
 
 // eslint-disable-next-line no-unused-vars
 function calculateWinner(squares) {

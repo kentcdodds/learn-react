@@ -43,9 +43,13 @@ const largeBox = <div>large orange box</div>
 // Feel free to peak at the exercises-final/02-extra-0.js for more details.
 // Note: The tests for 02 and 02-extra-0.js are the same :)
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
-// You can make all the tests pass by updating the code above.
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
+
 function Usage() {
   return (
     <div>

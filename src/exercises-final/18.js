@@ -3,9 +3,7 @@ import React from 'react'
 
 const Graph = React.lazy(() => import('../graph'))
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
-function Usage() {
+function GraphShower() {
   const [showGraph, setShowGraph] = React.useState(false)
   return (
     <div>
@@ -28,6 +26,10 @@ function Usage() {
       </div>
     </div>
   )
+}
+
+function Usage() {
+  return <GraphShower />
 }
 Usage.title = 'Graph: Lazy-loading with React.lazy'
 

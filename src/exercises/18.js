@@ -1,10 +1,49 @@
 // Graph: Lazy-loading with React.lazy
 import React from 'react'
+// 🐨 remove this Graph import 💣
+import Graph from '../graph'
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
+// 🐨 use React.lazy to get the Graph component via a dynamic import
+// 📜 https://reactjs.org/docs/code-splitting.html#reactlazy
+
+function GraphShower() {
+  const [showGraph, setShowGraph] = React.useState(false)
+  return (
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          value={showGraph}
+          onChange={e => setShowGraph(e.target.checked)}
+        />
+        {' show Graph'}
+      </label>
+      <div>
+        {/*
+          🐨 You need to wrap this in <React.Suspense> with a "fallback" prop
+          so you can tell React what to show while the component code is being
+          loaded
+          📜 https://reactjs.org/docs/code-splitting.html#suspense
+        */}
+        {showGraph ? (
+          <div className="totally-centered">
+            <Graph />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  )
+}
+
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
+
 function Usage() {
-  return <div>todo</div>
+  return <GraphShower />
 }
 Usage.title = 'Graph: Lazy-loading with React.lazy'
 

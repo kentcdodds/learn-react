@@ -161,8 +161,12 @@ function Game() {
 //    When you're done, your component will simply use `useGame` and return some
 //    JSX elements. Cool right!?
 
-// Don't make changes to the Usage component. It's here to show you how your
-// component is intended to be used and is used in the tests.
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
 
 function calculateWinner(squares) {
   const lines = [
