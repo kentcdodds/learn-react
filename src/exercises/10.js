@@ -112,9 +112,6 @@ function Game() {
     setStepNumber(newHistory.length)
   }
 
-  // If you've made it this far and the tests are still passing and the app
-  // still works then you're done! 🎉 Don't forget the 💯 below!
-
   const current = history[stepNumber]
   const winner = calculateWinner(current.squares)
   let status
@@ -134,6 +131,9 @@ function Game() {
       </li>
     )
   })
+
+  // If you've made it this far and the tests are still passing and the app
+  // still works then you're done! 🎉 Don't forget the 💯 below!
 
   return (
     <div className="game">

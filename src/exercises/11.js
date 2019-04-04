@@ -19,11 +19,11 @@ import VanillaTilt from 'vanilla-tilt'
 // Here's a simple example of using the `ref` prop:
 //
 // function MyDiv() {
-//   const myDiv = React.useRef()
+//   const myDivRef = React.useRef()
 //   React.useEffect(() => {
-//     console.log(myDiv.current) // <-- myDiv.current is the div DOM node!
-//   }, [myDiv.current])
-//   return <div ref={myDiv}>hi</div>
+//     const myDivNode = myDivRef.current // <-- myDivRef.current is the div DOM node!
+//   }, [])
+//   return <div ref={myDivRef}>hi</div>
 // }
 // ReactDOM.render(<MyDiv />, document.getElementById('root'))
 //
