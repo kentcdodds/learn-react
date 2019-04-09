@@ -257,10 +257,6 @@ const IsolatedFinal = ({moduleName}) => (
   <Isolated loader={() => import(`./exercises-final/${moduleName}`)} />
 )
 
-const IsolatedTestComponent = ({moduleName}) => (
-  <Isolated loader={() => import(`./testing/components/${moduleName}`)} />
-)
-
 const FakeApp = () => <div>{`Welcome to our fake app ;-)`}</div>
 
 function App() {
@@ -274,7 +270,6 @@ function App() {
         <FullPage path="/:exerciseId/final" type="final" />
         <IsolatedExercise path="/isolated/exercises/:moduleName" />
         <IsolatedFinal path="/isolated/exercises-final/:moduleName" />
-        <IsolatedTestComponent path="/isolated/testing/components/:moduleName" />
         <NotFound default />
       </Router>
     </React.Suspense>
