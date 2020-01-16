@@ -1,11 +1,11 @@
 import React from 'react'
-import {render, fireEvent} from 'react-testing-library'
+import {render, fireEvent, screen} from '@testing-library/react'
 import Usage from '../exercises-final/17'
 // import Usage from '../exercises/17'
 
 test('logs only when the state is changed', () => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
-  const {getByLabelText, getByText} = render(<Usage />)
+  render(<Usage />)
   expect(console.log.mock.calls).toMatchInlineSnapshot(`
 Array [
   Array [
@@ -19,7 +19,7 @@ Array [
 ]
 `)
   console.log.mockClear()
-  fireEvent.change(getByLabelText(/first name/i), {target: {value: 'a'}})
+  fireEvent.change(screen.getByLabelText(/first name/i), {target: {value: 'a'}})
   const callCount = console.log.mock.calls.length
   if (callCount > 1) {
     throw new Error(
@@ -36,7 +36,7 @@ Array [
 `)
   console.log.mockClear()
 
-  fireEvent.click(getByText('0'))
+  fireEvent.click(screen.getAllByText('0')[0])
   expect(console.log.mock.calls).toMatchInlineSnapshot(`
 Array [
   Array [

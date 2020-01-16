@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server.browser'
 import prettyFormat from 'pretty-format'
-import Usage from '../exercises-final/02-extra-0'
-// import Usage from '../exercises/02-extra-0'
+import Usage from '../exercises-final/02-extra.0'
+// import Usage from '../exercises/02'
 
 const {DOMElement, DOMCollection} = prettyFormat.plugins
 
