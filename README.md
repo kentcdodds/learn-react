@@ -48,8 +48,8 @@ follow the following instructions.
 After you've made sure to have the correct things (and versions) installed, you
 should be able to just run a few commands to get set up:
 
-> NOTE: `<branchname>` refers to the specific branch you want to clone. If
-> replace that with the branch you were given in the instructions or `master`
+> NOTE: `<branchname>` refers to the specific branch you want to clone. 
+> Replace that with the branch you were given in the instructions or `master`
 > if you were not given any specific instructions.
 
 ```
