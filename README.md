@@ -154,10 +154,19 @@ help if I can.
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt="Kent C. Dodds"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/learn-react/commits?author=kentcdodds "Tests") | [<img src="https://avatars3.githubusercontent.com/u/8210763?v=4" width="100px;" alt="Nathan Hannig"/><br /><sub><b>Nathan Hannig</b></sub>](https://nathanhannig.com)<br />[🐛](https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig "Bug reports") [💻](https://github.com/kentcdodds/learn-react/commits?author=nathanhannig "Code") | [<img src="https://avatars2.githubusercontent.com/u/18534488?v=4" width="100px;" alt="Trevor A"/><br /><sub><b>Trevor A</b></sub>](https://github.com/ta1188)<br />[💻](https://github.com/kentcdodds/learn-react/commits?author=ta1188 "Code") |
-| :---: | :---: | :---: |
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt=""/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://nathanhannig.com"><img src="https://avatars3.githubusercontent.com/u/8210763?v=4" width="100px;" alt=""/><br /><sub><b>Nathan Hannig</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=nathanhannig" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ta1188"><img src="https://avatars2.githubusercontent.com/u/18534488?v=4" width="100px;" alt=""/><br /><sub><b>Trevor A</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=ta1188" title="Code">💻</a></td>
+    <td align="center"><a href="http://brennongs.dev"><img src="https://avatars3.githubusercontent.com/u/24623425?v=4" width="100px;" alt=""/><br /><sub><b>Brennon Schow</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=brennongs" title="Documentation">📖</a></td>
+  </tr>
+</table>
 
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
