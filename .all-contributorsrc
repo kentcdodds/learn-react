@@ -38,7 +38,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "brennongs",
+      "name": "Brennon Schow",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/24623425?v=4",
+      "profile": "http://brennongs.dev",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
