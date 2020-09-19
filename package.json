@@ -16,6 +16,7 @@
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.4.0",
     "d3": "5.15.0",
+    "glob": "7.1.6",
     "preval.macro": "4.0.0",
     "prop-types": "15.7.2",
     "react": "16.12.0",
