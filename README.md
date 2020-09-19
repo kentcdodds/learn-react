@@ -162,6 +162,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://nathanhannig.com"><img src="https://avatars3.githubusercontent.com/u/8210763?v=4" width="100px;" alt=""/><br /><sub><b>Nathan Hannig</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=nathanhannig" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ta1188"><img src="https://avatars2.githubusercontent.com/u/18534488?v=4" width="100px;" alt=""/><br /><sub><b>Trevor A</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=ta1188" title="Code">💻</a></td>
     <td align="center"><a href="http://brennongs.dev"><img src="https://avatars3.githubusercontent.com/u/24623425?v=4" width="100px;" alt=""/><br /><sub><b>Brennon Schow</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=brennongs" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://upleveled.io"><img src="https://avatars2.githubusercontent.com/u/1935696?v=4" width="100px;" alt=""/><br /><sub><b>Karl Horky</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=karlhorky" title="Code">💻</a></td>
   </tr>
 </table>
 
