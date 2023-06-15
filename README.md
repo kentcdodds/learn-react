@@ -49,7 +49,7 @@ After you've made sure to have the correct things (and versions) installed, you
 should be able to just run a few commands to get set up:
 
 > NOTE: `<branchname>` refers to the specific branch you want to clone. 
-> Replace that with the branch you were given in the instructions or `master`
+> Replace that with the branch you were given in the instructions or `main`
 > if you were not given any specific instructions.
 
 ```
@@ -187,13 +187,13 @@ at kent@doddsfamily.us
 [build-badge]: https://img.shields.io/travis/kentcdodds/learn-react.svg?style=flat-square&logo=travis
 [build]: https://travis-ci.org/kentcdodds/learn-react
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
-[license]: https://github.com/kentcdodds/learn-react/blob/master/README.md#license
+[license]: https://github.com/kentcdodds/learn-react/blob/main/README.md#license
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
 [donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
 [donate]: http://kcd.im/donate
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/learn-react/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/kentcdodds/learn-react/blob/main/CODE_OF_CONDUCT.md
 [github-watch-badge]: https://img.shields.io/github/watchers/kentcdodds/learn-react.svg?style=social
 [github-watch]: https://github.com/kentcdodds/learn-react/watchers
 [github-star-badge]: https://img.shields.io/github/stars/kentcdodds/learn-react.svg?style=social
