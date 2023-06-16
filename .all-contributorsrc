@@ -56,9 +56,20 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jacob-willden",
+      "name": "Jacob Willden",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67853915?v=4",
+      "profile": "https://jacobwillden.codeberg.page/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs",
+  "commitConvention": "angular"
 }
