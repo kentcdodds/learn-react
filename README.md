@@ -157,17 +157,21 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt=""/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://nathanhannig.com"><img src="https://avatars3.githubusercontent.com/u/8210763?v=4" width="100px;" alt=""/><br /><sub><b>Nathan Hannig</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=nathanhannig" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/ta1188"><img src="https://avatars2.githubusercontent.com/u/18534488?v=4" width="100px;" alt=""/><br /><sub><b>Trevor A</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=ta1188" title="Code">💻</a></td>
-    <td align="center"><a href="http://brennongs.dev"><img src="https://avatars3.githubusercontent.com/u/24623425?v=4" width="100px;" alt=""/><br /><sub><b>Brennon Schow</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=brennongs" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://upleveled.io"><img src="https://avatars2.githubusercontent.com/u/1935696?v=4" width="100px;" alt=""/><br /><sub><b>Karl Horky</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=karlhorky" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3?s=100" width="100px;" alt="Kent C. Dodds"/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=kentcdodds" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://nathanhannig.com"><img src="https://avatars3.githubusercontent.com/u/8210763?v=4?s=100" width="100px;" alt="Nathan Hannig"/><br /><sub><b>Nathan Hannig</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/issues?q=author%3Anathanhannig" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/learn-react/commits?author=nathanhannig" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ta1188"><img src="https://avatars2.githubusercontent.com/u/18534488?v=4?s=100" width="100px;" alt="Trevor A"/><br /><sub><b>Trevor A</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=ta1188" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://brennongs.dev"><img src="https://avatars3.githubusercontent.com/u/24623425?v=4?s=100" width="100px;" alt="Brennon Schow"/><br /><sub><b>Brennon Schow</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=brennongs" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://upleveled.io"><img src="https://avatars2.githubusercontent.com/u/1935696?v=4?s=100" width="100px;" alt="Karl Horky"/><br /><sub><b>Karl Horky</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=karlhorky" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://jacobwillden.codeberg.page/"><img src="https://avatars.githubusercontent.com/u/67853915?v=4?s=100" width="100px;" alt="Jacob Willden"/><br /><sub><b>Jacob Willden</b></sub></a><br /><a href="https://github.com/kentcdodds/learn-react/commits?author=jacob-willden" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
