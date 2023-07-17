@@ -1,3 +1,9 @@
+# Archived
+
+This is archived. If you want to learn React, I recommend [The Beginner's Guide to React](https://kcd.im/beginner-react) as a great free resource and [EpicReact.dev](https://EpicReact.dev) as a premium resource that will get you *really* good at React.
+
+Cheers!
+
 # Learn React
 
 👋 hi there! My name is [Kent C. Dodds](https://kentcdodds.com)!
